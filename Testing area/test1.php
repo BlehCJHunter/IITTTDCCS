@@ -22,6 +22,7 @@ require_once('calendar/tc_calendar.php');
 	  $myCalendar = new tc_calendar("date1", true);
 	  $myCalendar->setIcon("calendar/images/iconCalendar.gif");
 	  $myCalendar->setPath("calendar/");
+      $myCalendar->setDate(date("d"), date("m"), date("Y"));
 	  $myCalendar->setYearInterval(1960, date("Y"));
 	  $myCalendar->dateAllow('1900-01-01', date("Y-m-d"));
 	  $myCalendar->writeScript();
