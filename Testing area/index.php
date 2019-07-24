@@ -13,5 +13,7 @@ and open the template in the editor.
         <a href="./RepeaterSetup.php"> POST repeater </a>
         <br>
         <a href="./test1.php"> Datepicker test </a>
+        <br>
+        <a href="./TestLogin.php"> Test Login </a>
     </body>
 </html>
