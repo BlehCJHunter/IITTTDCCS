@@ -8,40 +8,23 @@
         <meta name="author" content="Brendan, Callum, Jess, Joe, Michael, Won">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="format-detection" content="telephone=no">
-        <style type="text/css">
-            <!--
-            body			{margin:0; background-color:#eee;}
-            header, nav, main, footer {max-width:960px; margin:0 auto 0 auto;}
-            header, footer		{height:200px; background-color:#555; color:#fff;}
-            main			{padding:25px 0 25px 0; background-color:#fff;}
-            nav			{height:40px; line-height:40px; background-color:#ccc;}
-
-            h1, h2, h3		{margin:0; font-family:"Times New Roman", Times, serif;}
-            h1			{padding:0px 10px 0px 10px;}
-            h2, h3			{padding:15px 25px 0px 25px;}
-            h3			{font-style:italic}
-            header h1		{text-align:center;}
-            nav li, p, footer li	{margin:0; font-family: Arial, Helvetica, sans-serif;}
-            p			{padding:10px 2em 0px 2em; text-align:justify}
-            ul			{margin:0; padding:0;}
-            nav ul, footer ul	{list-style:none;}
-            nav li			{display:inline-block; width:48%; text-align:center;}
-            footer ul		{text-align:center; line-height:200px;}
-            li a			{color:#fff; text-decoration:none; font-weight:bold}
-            a:hover			{text-decoration:underline;}
-            -->
-        </style>
+	<link rel="stylesheet" href="css/baseStyle.css">
+	<style type="text/css">
+	<!--
+	body			{margin:0; background-color:#eee;}
+	main			{padding:25px 0 25px 0; background-color:#fff;}
+	h1			{padding:0px 10px 0px 10px;}
+	header h1		{text-align:center;}
+	h2, h3			{padding:15px 25px 0px 25px;}
+	p			{padding:10px 2em 0px 2em; text-align:justify}
+	-->
+	</style>
     </head>
     <body>
         <header>
             <h1><br><br>The Thing Doers</h1>
         </header>
-        <nav>
-            <ul>
-                <li><a href="login.php">Clinical Coding System</a></li>
-                <li><a href="about.php">About Us</a></li>
-            </ul>
-        </nav>
+<?php include 'includes/nav.php';?>
         <main>
             <h2>Into to the Clinical Coding System</h2>
             <h3>Forward</h3>
