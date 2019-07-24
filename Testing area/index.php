@@ -12,6 +12,6 @@ and open the template in the editor.
     <body>
         <a href="./RepeaterSetup.php"> POST repeater </a>
         <br>
-        <a href="./test.php"> Datepicker test </a>
+        <a href="./test1.php"> Datepicker test </a>
     </body>
 </html>
