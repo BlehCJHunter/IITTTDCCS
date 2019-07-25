@@ -30,7 +30,7 @@ if (!empty($active)) {
                 $message = "<span style='color:red'>The username or password was incorrect</span>";
             }
         } else {
-            $message = "<span style='color:red'>Please input a username and password</span>";
+            $message = "<span style='color:red'>You went to great lengths to not input your " . empty($usr) ? "password" : "username" . "</span>";
         }
     }
 } else {
