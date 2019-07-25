@@ -7,10 +7,18 @@ if (mysqli_connect_errno()) {
     echo "<br>Debug username: 'test'; Debug password: 'test1234'";
     $debug = 1;
 }
-$usr = htmlspecialchars(stripslashes(@$_POST["usr"])); //Make sure we don't get 1337 h4x0r'd on.
-$pwd = htmlspecialchars(stripslashes(@$_POST["pwd"])); //These are expected to not exist at first
+if (!strlen(@$_POST["usr"]) < 2) { //Sanity check to enable easter egg
+    $usr = htmlspecialchars(stripslashes(@$_POST["usr"])); //Make sure we don't get 1337 h4x0r'd on.
+} else {
+    $usr = htmlspecialchars(stripslashes(@$_POST["pain_is_weakness"])); //Memes
+}
+if(!strlen(@$_POST["pwd"]) < 8){
+        $pwd = htmlspecialchars(stripslashes(@$_POST["pwd"])); //These are expected to not exist at first
+} else{
+        $pwd = htmlspecialchars(stripslashes(@$_POST["leaving_the_body"])); //Memes 2: I went too far
+}
 $key = $debug ? hash("sha512", "test" . "ZYX" . "test1234" . "ABC") : mysqli_store_result(mysqli_query($conn, /* "SQL Query to look for the token associated with $usr" */));
-if(!$debug){
+if (!$debug) {
     mysqli_close($conn);
 }
 $active = @$_SESSION['active'];
@@ -30,7 +38,7 @@ if (!empty($active)) {
                 $message = "<span style='color:red'>The username or password was incorrect</span>";
             }
         } else {
-            $message = "<span style='color:red'>You went to great lengths to not input your " . empty($usr) ? "password" : "username" . "</span>";
+            $message = "<span style='color:red'>You went to great lengths to not input your " . (!empty($usr) ? "password" : "username") . "</span>";
         }
     }
 } else {
@@ -46,7 +54,7 @@ if (!empty($active)) {
                 $message = "<span style='color:red'>The username or password was incorrect</span>";
             }
         } else {
-            $message = "<span style='color:red'>Please input a username and password</span>";
+            $message = "<span style='color:red'>You went to great lengths to not input your " . (!empty($usr) ? "password" : "username") . "</span>";
         }
     }
 }
