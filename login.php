@@ -72,9 +72,9 @@ if (!empty($active)) {
         <link href="https://fonts.googleapis.com/css?family=Heebo:300&display=swap" rel="stylesheet"> 
         <style type="text/css">
             <!--
-            html, body	{height:100%; font-family: 'Heebo', sans-serif;}
+            html, body	{margin:0; height:100%; font-family: 'Heebo', sans-serif;}
             main		{display:table; position:absolute; top:0; left:0; height:100%; width:100%;}
-            #topBar		{position:absolute; width:100%; height:40px; text-align:center; line-height:40px; font-weight:bold; color:#444; background-color:#eee; z-index:2}
+            header		{position:absolute; width:100%; height:40px; text-align:center; line-height:40px; font-weight:bold; color:#444; background-color:#eee; z-index:2}
             #inner		{display:table-cell; vertical-align:middle}
             main form	{margin-left:auto; margin-right:auto; width:275px; text-align:center; color:#666;}
             #topBorder, #bottomBorder	{width:275px;}
@@ -90,8 +90,10 @@ if (!empty($active)) {
         </style>
     </head>
     <body>
+        <header>
+            Clinical Coder v0.1
+        </header>
         <main>
-            <div id="topBar">Clinical Coder v0.1</div>
             <div id="inner">
                 <form action="login.php" method="POST">
                     <div id="topBorder">
