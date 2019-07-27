@@ -2,7 +2,7 @@
 session_start();
 $conn = @mysqli_connect(/* User Database details */);
 if (mysqli_connect_errno()) {
-    echo "<br><br>Failed to connect to MySQL: " . mysqli_connect_error();
+    echo "Failed to connect to MySQL: " . mysqli_connect_error();
     echo "<br>During local testing, this is not an error. Once I co-ordinate with the database team, I will remove the error contol operator and this will be a real error.";
     echo "<br>Debug username: 'test'; Debug password: 'test1234'";
     $debug = 1;

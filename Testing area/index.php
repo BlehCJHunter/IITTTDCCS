@@ -15,5 +15,7 @@ and open the template in the editor.
         <a href="./test1.php"> Datepicker test </a>
         <br>
         <a href="./TestLogin.php"> Test Login </a>
+        <br>
+        <a href="./ListPopulate.php"> Test Dropdown Box </a>
     </body>
 </html>
