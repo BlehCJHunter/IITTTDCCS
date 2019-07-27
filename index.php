@@ -26,7 +26,6 @@
         </header>
 <?php include 'includes/nav.php';?>
         <main>
-            <h1><a href="./login.php"> Quick and dirty test link to login.php </a>
             <h2>Into to the Clinical Coding System</h2>
             <h3>Forward</h3>
             <p>This group project is building on the initial project idea developed by Brendan and available for viewing here: https://brendan6780.github.io/ProjectIdea.html. Further adaptations by ‘The Thing Doers’, such as incorporation of additional functionalities and production of a UI wireframe, are discussed in the  section ‘Further Considerations for Development by The Thing Doers’.</p>
