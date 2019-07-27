@@ -21,8 +21,9 @@ and open the template in the editor.
         }
                 //Check to see if the data has been entered, and if so, make a user, otherwise show the login boxes
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $creds = fopen("users/" . htmlspecialchars($_POST['UName']), "w"); //Temporary test solution: Make a file with a username to store the token
-            fwrite($creds, hash("sha512", htmlspecialchars($_POST['UName']) . "ZYX" . htmlspecialchars($_POST['PWord']) . "ABC")); //Store that token
+            //$creds = fopen("users/" . htmlspecialchars($_POST['UName']), "w"); //Temporary test solution: Make a file with a username to store the token
+            //fwrite($creds, hash("sha512", htmlspecialchars($_POST['UName']) . "ZYX" . htmlspecialchars($_POST['PWord']) . "ABC")); //Store that token
+            echo hash("sha512", htmlspecialchars($_POST['UName']) . "ZYX" . htmlspecialchars($_POST['PWord']) . "ABC");
         } else {
             loginPrompt();
         }

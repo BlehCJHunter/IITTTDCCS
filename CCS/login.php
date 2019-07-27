@@ -11,20 +11,20 @@ if(!strlen(@$_POST["pwd"]) < 8){
 } else{
         $pwd = htmlspecialchars(stripslashes(@$_POST["leaving_the_body"])); //Memes 2: I went too far
 }
-$key =mysqli_store_result(mysqli_query($conn, /* "SQL Query to look for the token associated with $usr" */));
-if (!$debug) {
-    mysqli_close($conn);
-}
+$query = "SELECT `Password Token` FROM Users WHERE `Username`='Bleh'";
+$key = mysqli_fetch_array(mysqli_query($conn, $query));
+$conn->close();
+$userkey = hash("sha512", $usr . "ZYX" . $pwd . "ABC");
 $active = @$_SESSION['active'];
 if (!empty($active)) {
     if ($active >= "1") {
-        header("Location: index.php");
+        header("Location: ../index.php");
         exit();
     } else if ($active == "0") {
         if (!empty($usr) && !empty($pwd)) {
-            if (hash("sha512", $usr . "ZYX" . $pwd . "ABC") == $key) {
+            if (strcomp($userkey, $key["Password Token"]) == 0) {
                 $_SESSION['active'] = "1";
-                header("Location: index.php");
+                header("Location: ../index.php");
                 exit();
             } else {
                 $message = "<span style='color:red'>The username or password was incorrect</span>";
@@ -38,9 +38,9 @@ if (!empty($active)) {
         $message = "&nbsp;";
     } else {
         if (!empty($usr) && !empty($pwd)) {
-            if (hash("sha512", $usr . "ZYX" . $pwd . "ABC") == $key) {
+            if (strcomp($userkey, $key["Password Token"]) == 0) {
                 $_SESSION['active'] = "1";
-                header("Location: index.php");
+                header("Location: ../index.php");
                 exit();
             } else {
                 $message = "<span style='color:red'>The username or password was incorrect</span>";
