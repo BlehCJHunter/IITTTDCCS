@@ -1,43 +1,54 @@
 <?php include 'admin/includes/dbconnect.inc';?>
 <?php
 session_start();
-$usr = $_POST["usr"];
-$pwd = $_POST["pwd"];
-$active = @$_SESSION['active'];
-if ( !empty($active) ) {
-	if ( $active >= "1" ) {
-		header("Location: index.php");
-		exit();
-	}else if ($active == "0") {
-		if ( !empty($usr) && !empty($pwd) ) {
-			if ( $usr == "test" && $pwd == "test1234" ) {
-				$_SESSION['active'] = "1";
-				header("Location: index.php");
-				exit();
-			}else{
-				$message = "<span style='color:red'>bad credentials</span>";
-			}
-		}else{
-			$message = "<span style='color:red'>bad credentials</span>";
-		}
-		$message = "<span style='color:red'>bad credentials</span>";
-	}
+if (!strlen(@$_POST["usr"]) < 2) { //Sanity check to enable easter egg
+    $usr = htmlspecialchars(stripslashes(@$_POST["usr"])); //Make sure we don't get 1337 h4x0r'd on.
 } else {
-	if ( empty($usr) && empty($pwd) ) {
-		$message = "&nbsp;";
-	} else {
-		if ( !empty($usr) && !empty($pwd) ) {
-			if ( $usr == "test" && $pwd == "test1234" ) {
-				$_SESSION['active'] = "1";
-				header("Location: index.php");
-				exit();
-			}else{
-				$message = "<span style='color:red'>bad credentials</span>";
-			}
-		}else{
-			$message = "<span style='color:red'>bad credentials</span>";
-		}
-	}
+    $usr = htmlspecialchars(stripslashes(@$_POST["pain_is_weakness"])); //Memes
+}
+if(!strlen(@$_POST["pwd"]) < 8){
+        $pwd = htmlspecialchars(stripslashes(@$_POST["pwd"])); //These are expected to not exist at first
+} else{
+        $pwd = htmlspecialchars(stripslashes(@$_POST["leaving_the_body"])); //Memes 2: I went too far
+}
+$key =mysqli_store_result(mysqli_query($conn, /* "SQL Query to look for the token associated with $usr" */));
+if (!$debug) {
+    mysqli_close($conn);
+}
+$active = @$_SESSION['active'];
+if (!empty($active)) {
+    if ($active >= "1") {
+        header("Location: index.php");
+        exit();
+    } else if ($active == "0") {
+        if (!empty($usr) && !empty($pwd)) {
+            if (hash("sha512", $usr . "ZYX" . $pwd . "ABC") == $key) {
+                $_SESSION['active'] = "1";
+                header("Location: index.php");
+                exit();
+            } else {
+                $message = "<span style='color:red'>The username or password was incorrect</span>";
+            }
+        } else {
+            $message = "<span style='color:red'>You went to great lengths to not input your " . (!empty($usr) ? "password" : "username") . "</span>";
+        }
+    }
+} else {
+    if (empty($usr) && empty($pwd)) {
+        $message = "&nbsp;";
+    } else {
+        if (!empty($usr) && !empty($pwd)) {
+            if (hash("sha512", $usr . "ZYX" . $pwd . "ABC") == $key) {
+                $_SESSION['active'] = "1";
+                header("Location: index.php");
+                exit();
+            } else {
+                $message = "<span style='color:red'>The username or password was incorrect</span>";
+            }
+        } else {
+            $message = "<span style='color:red'>You went to great lengths to not input your " . (!empty($usr) ? "password" : "username") . "</span>";
+        }
+    }
 }
 ?>
 <!DOCTYPE html>
