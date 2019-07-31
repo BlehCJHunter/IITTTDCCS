@@ -1,14 +1,14 @@
 <?php
 session_start();
 $debug = 1; // Echo keys etc etc, and destroys the session when revisiting
-if (!strlen(@$_POST["usr"]) < 2) { //Sanity check to enable easter egg
+if (!strlen(htmlspecialchars(stripslashes($_POST["usr"]))) < 2) { //Sanity check to enable easter egg
     $usr = htmlspecialchars(stripslashes($_POST["usr"])); //Make sure we don't get 1337 h4x0r'd on.
     $nousr = 0;
 } else {
     $usr = ""; //Memes
     $nousr = 1;
 }
-if (!strlen(@$_POST["pwd"]) < 8) {
+if (!strlen(htmlspecialchars(stripslashes($_POST["pwd"]))) < 8) {
     $pwd = htmlspecialchars(stripslashes($_POST["pwd"]));
     $nopwd = 0;
 } else {
