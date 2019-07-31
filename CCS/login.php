@@ -41,6 +41,7 @@ if (!empty($active)) {
         if (!$nousr && !$nopwd) {
             if ($userkey == $key["Password Token"]) {
                 $_SESSION['active'] = "1";
+                $_SESSION['key'] = $key;
                 header("Location: index.php");
                 exit();
             } else {
@@ -57,6 +58,7 @@ if (!empty($active)) {
         if (!$nousr && !$nopwd) {
             if ($userkey == $key["Password Token"]) {
                 $_SESSION['active'] = "1";
+                $_SESSION['key'] = $key;
                 header("Location: index.php");
                 exit();
             } else {
