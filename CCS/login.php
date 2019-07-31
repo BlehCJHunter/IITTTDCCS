@@ -1,7 +1,6 @@
-<?php include 'admin/includes/dbconnect.inc'; ?>
 <?php
 session_start();
-$debug = 1;
+$debug = 1; // Echo keys etc etc, and destroys the session when revisiting
 if (!strlen(@$_POST["usr"]) < 2) { //Sanity check to enable easter egg
     $usr = htmlspecialchars(stripslashes($_POST["usr"])); //Make sure we don't get 1337 h4x0r'd on.
     $nousr = 0;
@@ -16,12 +15,15 @@ if (!strlen(@$_POST["pwd"]) < 8) {
     $pwd = "";
     $nopwd = 1; //Memes 2: I went too far
 }
-$query = "SELECT `Password Token` FROM Users WHERE `Username`='" . $usr . "'";
-$key = mysqli_fetch_array(mysqli_query($conn, $query));
-$conn->close();
+if (!nousr && !nopwd) {
+    require 'admin/includes/dbconnect.inc';
+    $query = "SELECT `Password Token` FROM Users WHERE `Username`='" . $usr . "'";
+    $key = mysqli_fetch_array(mysqli_query($conn, $query));
+    $conn->close();
+}
 $userkey = hash("sha512", $usr . "ZYX" . $pwd . "ABC");
 $active = $_SESSION['active'];
-if ($debug == 1) {
+if ($debug) {
     echo "Key State: " . $key . "<br>";
     echo "Key: " . $key["Password Token"] . "<br>";
     echo "User Key: " . $userkey . "<br>";
