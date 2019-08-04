@@ -1,6 +1,9 @@
 <?php
 session_start();
-$debug = 1; // Echo keys etc etc, and destroys the session when revisiting
+$debug = 0; // Echo keys etc etc, and destroys the session when revisiting
+if ($_SESSION['active']){
+    header("Location: https://ccs.geekrunner.net/CCS/index.php");
+}
 if (!strlen(htmlspecialchars(stripslashes($_POST["usr"]))) < 2) { //Sanity check to enable easter egg
     $usr = htmlspecialchars(stripslashes($_POST["usr"])); //Make sure we don't get 1337 h4x0r'd on.
     $nousr = 0;
@@ -41,7 +44,7 @@ if (!empty($active)) {
         if (!$nousr && !$nopwd) {
             if ($userkey == $key["Password Token"]) {
                 $_SESSION['active'] = "1";
-                $_SESSION['key'] = $key;
+                $_SESSION['key'] = $key["Password Token"];
                 header("Location: index.php");
                 exit();
             } else {
@@ -58,7 +61,7 @@ if (!empty($active)) {
         if (!$nousr && !$nopwd) {
             if ($userkey == $key["Password Token"]) {
                 $_SESSION['active'] = "1";
-                $_SESSION['key'] = $key;
+                $_SESSION['key'] = $key["Password Token"];
                 header("Location: index.php");
                 exit();
             } else {

@@ -1,12 +1,5 @@
 <?php
 require 'includes\session.inc';
-if ( $_POST["logout"] == "logout" ) {
-	$_SESSION['active'] = "0";
-        exit();
-}
-if ($_SESSION['active'] && $_SESSION['loaded']){
-    
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,15 +21,14 @@ if ($_SESSION['active'] && $_SESSION['loaded']){
 <body>
 	<header>
 	</header>
+	<?php include 'includes/nav.php';?>
 	<main>
-	Empty Main Page<br>
-	If you try to access this page without logging in first, it will redirect you to the login page.
+            <?php
+            echo "Name: " . $_SESSION['FirstName'] . " " . $_SESSION['LastName'] . "<br>";
+            echo "User ID: " . $_SESSION['UID'] . " " . "<br>";
+            echo "Access Level: " . $_SESSION['access'] . "<br>";
+            ?>
 	</main>
-	<footer>
-		<form action="index.php" method="post">
-			<input type="hidden" value="logout" name="logout" />
-			<input class="button" type="submit" value="Logout">
-		</form>
-	</footer>
+	<?php include 'includes/footer.php';?>
 </body>
 </html>

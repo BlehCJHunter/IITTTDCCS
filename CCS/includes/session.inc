@@ -1,24 +1,30 @@
 <?php
 
 session_start();
-if ($_SESSION['active'] != "1") {
+if ($_SESSION['active'] && !$_SESSION['loaded']) {
     header("Location: https://ccs.geekrunner.net/CCS/login.php");
     exit();
 } else {
-    if (!_SESSION['loaded'] || empty(_SESSION['loaded'])) {
+    if (!$_SESSION['loaded'] || empty($_SESSION['loaded'])) {
         require 'admin/includes/dbconnect.inc';
-        $query = "SELECT * FROM Users WHERE `Password Token`='" . _SESSION['key'] . "'";
+        $query = "SELECT * FROM Users WHERE `Password Token`='" . $_SESSION['key'] . "'";
         $data = mysqli_fetch_array(mysqli_query($conn, $query));
         $conn->close();
         $_SESSION['FirstName'] = $data["First Name"];
         $_SESSION['LastName'] = $data["Last Name"];
         if (empty($data["Patient ID"])) { //Are we dealing with staff or a patient?
             $_SESSION['UID'] = $data["User ID"];
-            $_SESSION['access'] = $data["" /* Whatever we call the rank in the database */];
+            $_SESSION['access'] = $data["Access_ID"];
+            $_SESSION['position'] = $data["" /* Whatever we call the position in the database, if we even track it */];
         } else {
             $_SESSION['patient'] = $data["Patient ID"];
             $_SESSION['access'] = 1;
+            $_SESSION['position'] = "Patient";
         }
+    } else if (!$_SESSION['active']){
+        session_unset();
+        session_destroy();
     }
+    exit();
 }
 ?>
