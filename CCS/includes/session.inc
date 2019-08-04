@@ -1,11 +1,14 @@
 <?php
 
 session_start();
-if ($_SESSION['active'] && !$_SESSION['loaded']) {
+if ( $_POST["logout"] == "logout" ) {
+	$_SESSION['active'] = "0";
+}
+if (!$_SESSION['active'] && !$_SESSION['loaded']) {
     header("Location: https://ccs.geekrunner.net/CCS/login.php");
     exit();
 } else {
-    if (!$_SESSION['loaded'] || empty($_SESSION['loaded'])) {
+    if (!$_SESSION['loaded'] || !isset($_SESSION['loaded'])) {
         require 'admin/includes/dbconnect.inc';
         $query = "SELECT * FROM Users WHERE `Password Token`='" . $_SESSION['key'] . "'";
         $data = mysqli_fetch_array(mysqli_query($conn, $query));
@@ -21,10 +24,12 @@ if ($_SESSION['active'] && !$_SESSION['loaded']) {
             $_SESSION['access'] = 1;
             $_SESSION['position'] = "Patient";
         }
-    } else if (!$_SESSION['active']){
+        $_SESSION['loaded'] = 1;
+    } else if (!$_SESSION['active']) {
         session_unset();
         session_destroy();
+        header("Location: https://ccs.geekrunner.net/CCS/login.php");
+        exit();
     }
-    exit();
 }
 ?>

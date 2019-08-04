@@ -1,11 +1,8 @@
 <?php
-require 'includes\session.inc';
-if ( $_POST["logout"] == "logout" ) {
-	$_SESSION['active'] = "0";
-        exit();
-}
-if ($_SESSION['active'] && $_SESSION['loaded']){
-    
+require 'includes/session.inc';
+if( $_SESSION['active'] && $_SESSION['loaded'])
+{
+    header("Location: https://ccs.geekrunner.net/CCS/userPage.php");
 }
 ?>
 <!DOCTYPE html>
@@ -29,14 +26,28 @@ if ($_SESSION['active'] && $_SESSION['loaded']){
 	<header>
 	</header>
 	<main>
-	Empty Main Page<br>
-	If you try to access this page without logging in first, it will redirect you to the login page.
+<?php
+$accessID = $_SESSION['access'];
+echo "";
+if ( isset($accessID) ) {
+	echo "Access ID has been set.";
+}else{
+	echo 'Access ID has not been set.<br>Please select a user type:';
+	echo '<form action="index.php" method="post">\n\t<label>Select a group:</label>\n';
+	echo '\t<input type="radio" name="Support" id="support" value="4" /><label for="support">Support</label>\n';
+	echo '\t<input type="radio" name="Admin" id="admin" value="3" /><label for="admin">Administrator</label>\n';
+	echo '\t<input type="radio" name="Doctor" id="doctor" value="2" /><label for="doctor">Doctor</label>\n';
+	echo '\t<input type="radio" name="Patient" id="patient" value="1" /><label for="patient">Patient</label>\n';
+	echo '\t<input class="button" type="submit" value="Go" />';
+	echo '</form>';
+}
+?>
 	</main>
 	<footer>
-		<form action="index.php" method="post">
-			<input type="hidden" value="logout" name="logout" />
-			<input class="button" type="submit" value="Logout">
-		</form>
+	<form action="index.php" method="post">
+		<input type="hidden" value="logout" name="logout" />
+		<input class="button" type="submit" value="Logout" />
+	</form>
 	</footer>
 </body>
 </html>

@@ -1,5 +1,6 @@
 <?php
-require 'includes\session.inc';
+require 'includes/session.inc';
+echo "";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,14 +22,19 @@ require 'includes\session.inc';
 <body>
 	<header>
 	</header>
-	<?php include 'includes/nav.php';?>
+	<?php //echo ""; include 'includes/nav.php';?>
 	<main>
             <?php
+            echo "";
             echo "Name: " . $_SESSION['FirstName'] . " " . $_SESSION['LastName'] . "<br>";
             echo "User ID: " . $_SESSION['UID'] . " " . "<br>";
             echo "Access Level: " . $_SESSION['access'] . "<br>";
             ?>
+            	<form action="userPage.php" method="post">
+		<input type="hidden" value="logout" name="logout" />
+		<input class="button" type="submit" value="Logout" />
+	</form>
 	</main>
-	<?php include 'includes/footer.php';?>
+	<?php //echo ""; include 'includes/footer.php';?>
 </body>
 </html>

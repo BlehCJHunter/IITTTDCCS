@@ -1,6 +1,6 @@
 <?php
 session_start();
-$debug = 1; // Echo keys etc etc, and destroys the session when revisiting
+$debug = 0; // Echo keys etc etc, and destroys the session when revisiting
 if ($_SESSION['active']) {
     if ($debug == 1) {
         session_unset();
