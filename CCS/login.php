@@ -1,27 +1,33 @@
 <?php
 session_start();
-$debug = 0; // Echo keys etc etc, and destroys the session when revisiting
-if ($_SESSION['active']){
+$debug = 1; // Echo keys etc etc, and destroys the session when revisiting
+if ($_SESSION['active']) {
+    if ($debug == 1) {
+        session_unset();
+    }
     header("Location: https://ccs.geekrunner.net/CCS/index.php");
 }
-if (!strlen(htmlspecialchars(stripslashes($_POST["usr"]))) < 2) { //Sanity check to enable easter egg
+if (strlen(htmlspecialchars(stripslashes($_POST["usr"]))) > 0) { //Sanity check to enable easter egg
     $usr = htmlspecialchars(stripslashes($_POST["usr"])); //Make sure we don't get 1337 h4x0r'd on.
     $nousr = 0;
 } else {
     $usr = ""; //Memes
-    $nousr = 1;
+    $nousr = 0;
 }
-if (!strlen(htmlspecialchars(stripslashes($_POST["pwd"]))) < 8) {
+if (strlen(htmlspecialchars(stripslashes($_POST["pwd"]))) > 0) {
     $pwd = htmlspecialchars(stripslashes($_POST["pwd"]));
     $nopwd = 0;
 } else {
     $pwd = "";
-    $nopwd = 1; //Memes 2: I went too far
+    $nopwd = 0; //Memes 2: I went too far
 }
-if (!nousr && !nopwd) {
+if (!$nousr && !$nopwd) {
     require 'admin/includes/dbconnect.inc';
     $query = "SELECT `Password Token` FROM Users WHERE `Username`='" . $usr . "'";
     $key = mysqli_fetch_array(mysqli_query($conn, $query));
+    if ($debug) {
+        echo mysqli_info($conn);
+    }
     $conn->close();
 }
 $userkey = hash("sha512", $usr . "ZYX" . $pwd . "ABC");
@@ -31,13 +37,12 @@ if ($debug) {
     echo "Key: " . $key["Password Token"] . "<br>";
     echo "User Key: " . $userkey . "<br>";
     echo "Session State: " . @$_SESSION['active'] . "<br>";
+    echo "User: " . $usr . "<br>";
+    echo "Pwd: " . $pwd . "<br>";
     debug_print_backtrace();
 }
 if (!empty($active)) {
     if ($active >= "1") {
-        if ($debug == 1) {
-            session_unset();
-        }
         header("Location: index.php");
         exit();
     } else if ($active == "0") {
