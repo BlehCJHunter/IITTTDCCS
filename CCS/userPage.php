@@ -24,6 +24,7 @@ echo "";
 	</header>
 	<?php //echo ""; include 'includes/nav.php';?>
 	<main>
+<br><br><br>
             <?php
             echo "";
             echo "Name: " . $_SESSION['FirstName'] . " " . $_SESSION['LastName'] . "<br>";

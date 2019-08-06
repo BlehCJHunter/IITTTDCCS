@@ -1,8 +1,17 @@
 <?php
 
 session_start();
-if ( $_POST["logout"] == "logout" ) {
-	$_SESSION['active'] = "0";
+if (!isset($_SESSION['timeout'])) {
+    $_SESSION['timeout'] = getdate();
+    date_add($_SESSION['timeout'], date_interval_create_from_date_string("15 minutes"));
+} elseif (time() > mktime($_SESSION['timeout'])) {
+    $_SESSION['active'] = 0;
+} else {
+    $_SESSION['timeout'] = getdate();
+    date_add($_SESSION['timeout'], date_interval_create_from_date_string("15 minutes"));
+}
+if ($_POST["logout"] == "logout") {
+    $_SESSION['active'] = 0;
 }
 if (!$_SESSION['active'] && !$_SESSION['loaded']) {
     header("Location: https://ccs.geekrunner.net/CCS/login.php");

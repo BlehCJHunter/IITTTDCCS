@@ -1,0 +1,1 @@
+You can create and destroy admin, doctor and support accounts.<br><br>

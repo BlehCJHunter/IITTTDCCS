@@ -56,10 +56,10 @@ if (!empty($usr) xor ! empty($pwd)) {
         debug_print_backtrace();
     }
     if (!empty($active)) {
-        if ($active >= "1") {
+        if ($active) {
             header("Location: index.php");
             exit();
-        } else if ($active == "0") {
+        } else if (!$active) {
             if (!$nousr && !$nopwd) {
                 if ($userkey == $key["Password Token"]) {
                     $_SESSION['active'] = "1";
@@ -79,7 +79,7 @@ if (!empty($usr) xor ! empty($pwd)) {
         } else {
             if (!$nousr && !$nopwd) {
                 if ($userkey == $key["Password Token"]) {
-                    $_SESSION['active'] = "1";
+                    $_SESSION['active'] = 1;
                     $_SESSION['key'] = $key["Password Token"];
                     header("Location: index.php");
                     exit();
