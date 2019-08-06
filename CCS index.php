@@ -45,28 +45,48 @@ function getUser($userName) {
 	<link rel="stylesheet" href="css/baseStyle.css">
 	<style type="text/css">
 	<!--
-	main form {
-		padding:10px;
+	nav, main, footer {
+		margin:auto;
+		max-width:960px;
+	}
+	nav ul {
+		margin:0;
 	}
 	nav li {
 		display:inline-block;
+		width:23%;
+		text-align:center;
 	}
-	#selectGroup {
-		width:200px;
-		margin:0px auto 0px auto;
-		background-color:#fafafa;
+	nav a {
+		text-decoration:none;
+	}
+	h1, h2 {
+		margin:0;
+		font-size:1em;
+		font-weight:bold;
+	}
+	header h1 {
+		color:#444;}
+	small, #godMenu a {
+		color:red;
+		text-align:center;
+	}
+	#welcome {
+		margin:20px 15px 20px 15px;
+		text-align:right;
+	}
+	#welcome h2 {
+		text-transform:capitalize;
 	}
 	-->
 	</style>
 </head>
 <body>
-	<header>
-	</header>
 	<nav>
 <?php
 if ($godMode = 1) {
-	echo "
-	\t\t<ul>
+	echo "\t\t<small>&nbsp;testing enabled</small><br>
+	\t\t<ul id='godMenu'>
 	\n\t\t\t<li><a href='" . $URLAccessChange . "?AUI=1'>Patient</a></li>
 	\n\t\t\t<li><a href='" . $URLAccessChange . "?AUI=2'>Doctor</a></li>
 	\n\t\t\t<li><a href='" . $URLAccessChange . "?AUI=3'>Admin</a></li>
@@ -74,29 +94,39 @@ if ($godMode = 1) {
 }
 ?>
 	</nav>
+	<header>
+		<h1>Clinical Coder v0.1</h1><br>
+	</header>
 	<main>
 	<?php
-		echo "Welcome ";
+		echo "<section id='welcome'><h2>Welcome ";
 		getUser($accessUserGlobal);
-		echo ". ";
+		echo "</h2> ";
+		$x=0;
+		// Statement below will show you your level of access
 		if ($godMode == 1 && $accessUserGlobal != $accessUserLocal) {
 			echo "You are viewing this page as ";
 			getUser($accessUserLocal);
+			$x=1;
 		}
-		echo "<br><br>";
+		echo "</section><br>";
+		// Adds an extra space if user switched access to look uniform
+		if ($x==0){echo "<br>";}
 		// This block grabs the modules that your access level allows
-		if ( $accessUserLocal == 4 )
-			{include 'includes/indexAccess4.inc';}
-		if ( $accessUserLocal >= 3 && $accessUserLocal <= 4 )
-			{include 'includes/indexAccess34.inc';}
-		if ( $accessUserLocal == 3 )
-			{include 'includes/indexAccess3.inc';}
-		if ( $accessUserLocal >= 2 && $accessUserLocal <= 3 )
-			{include 'includes/indexAccess23.inc';}
-		if ( $accessUserLocal >= 1 && $accessUserLocal <= 4 )
-			{include 'includes/indexAccess1234.inc';}
 		if ( $accessUserLocal == 1 )
 			{include 'includes/indexAccess1.inc';}
+		if ( $accessUserLocal >= 1 && $accessUserLocal <= 4 )
+			{include 'includes/indexAccess1234.inc';}
+		if ( $accessUserLocal >= 1 && $accessUserLocal <= 3 )
+			{include 'includes/indexAccess123.inc';}
+		if ( $accessUserLocal >= 2 && $accessUserLocal <= 3 )
+			{include 'includes/indexAccess23.inc';}
+		if ( $accessUserLocal == 3 )
+			{include 'includes/indexAccess3.inc';}
+		if ( $accessUserLocal >= 3 && $accessUserLocal <= 4 )
+			{include 'includes/indexAccess34.inc';}
+		if ( $accessUserLocal == 4 )
+			{include 'includes/indexAccess4.inc';}
 	?>
 	</main>
 	<footer>
