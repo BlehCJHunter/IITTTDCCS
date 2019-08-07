@@ -13,7 +13,7 @@ if (!isset($_SESSION['timeout'])) {
 if ($_POST["logout"] == "logout") {
     $_SESSION['active'] = 0;
 }
-if (!$_SESSION['active'] && !$_SESSION['loaded']) {
+if (!($_SESSION['active'] || isset($_SESSION['active'])) && !$_SESSION['loaded']) {
     header("Location: https://ccs.geekrunner.net/CCS/login.php");
     exit();
 } else {

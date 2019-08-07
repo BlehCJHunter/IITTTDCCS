@@ -17,5 +17,7 @@ and open the template in the editor.
         <a href="./TestLogin.php"> Test Login </a>
         <br>
         <a href="./ListPopulate.php"> Test Dropdown Box </a>
+        <br>
+        <a href="./CallumsVeryYesGoodCalendar.php"> Test Event Calendar </a>
     </body>
 </html>
