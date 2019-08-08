@@ -3,7 +3,8 @@ require 'includes\session.inc';
 if ($_SESSION['access'] < 2){
     header("Location: index.php");
 }
-
+$ur = htmlspecialchars(stripslashes($_POST["ur"]));
+$dob = htmlspecialchars(stripslashes($_POST["dateOfBirth"]));
 ?>
 <!DOCTYPE html>
 <html lang="en">
