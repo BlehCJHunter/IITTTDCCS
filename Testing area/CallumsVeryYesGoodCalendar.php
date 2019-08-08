@@ -17,9 +17,15 @@ switch ($offset <=> 0) {
         date_sub($date, date_interval_create_from_date_string((-$offset) . "months"));
         break;
 }
-/* require '../CCS/admin/includes/dbconnect.inc';
-  $query = "SELECT `number` FROM `testDates`";
-  $result = mysqliquery($conn, $query); */
+require '../CCS/admin/includes/dbconnect.inc';
+$query = "SELECT * FROM `testDates`";
+$result = mysqli_query($conn, $query);
+$conn->close();
+$arr = array();
+for ($i = 0; $i < mysqli_num_rows($result); $i++){
+    $s = mysqli_fetch_array($result);
+    array_push($arr, $s['number']);
+}
 $daysInMonth = date("j", strtotime('last day of this month', date_timestamp_get($date)));
 // N means display day of week as a number 1 to 7
 $firstDayInMonth = date("N", strtotime('first day of this month', date_timestamp_get($date)));
@@ -81,13 +87,19 @@ $month = date("F Y", date_timestamp_get($date));
     }
     // Dates in this month
     for ($i = 1; $i <= $daysInMonth; $i++) {
+        $s = "<a href=\"./appointments.php?date=" . date("dmY", mktime(0, 0, 0, date("m", date_timestamp_get($date)), $i, date("Y", date_timestamp_get($date)))) . "\">" . $i . "</a>";
         if ($i == date('d', time()) && $offset == 0) {
-            echo "<td style=\"background-color: #818100;\">" . $i . "</td>";
+            echo "<td style=\"background-color: #818100;\">" . $s . "</td>"; // Today
         } else if ($offset < 0 || ($i < date('d', time()) && $offset == 0)) {
-            echo "<td style=\"background-color: #408100;\">" . $i . "</td>";
+            echo "<td style=\"background-color: #408100;\">" . $s . "</td>"; // Previous dates
         } else {
-            echo "<td>" . $i . "</td>";
+            if (in_array($i, $arr)) {
+                echo "<td style=\"background-color: #8282d5;\">" . $s . "</td>"; // Marked dates
+            } else {
+                echo "<td>" . $s . "</td>"; // Ordinary dates
+            }
         }
+        echo "</a>";
         if (($i + $firstDayInMonth) % 7 == 0) {
             echo "</tr><tr>";
         }

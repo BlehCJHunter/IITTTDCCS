@@ -33,19 +33,19 @@
             Jane Doe | UR 123 45 67 890 | DOB 05APR1984
         </header>
         <main>
-            <form action="somewhere.php" method="POST">
+            <form action="patientSubmit.php" method="POST">
                 <table>
 
                     <tr>
 
                         <td class="titleCell"><label for="assessmentDate">Date of assessment:</label></td>
-                        <td class="dataEntry"><input class="field" name="assessmentDate" type="text" min="2" max="25"></td>
+                        <td class="dataEntry"><input class="field" name="assessmentDate" type="text" maxLength="25"></td>
                     </tr><tr>
                         <td class="titleCell"><label for="diagnosis1">Diagnosis[1]:</label></td>
-                        <td class="dataEntry"><input class="field" name="diagnosis1" type="text" min="2" max="25"></td>
+                        <td class="dataEntry"><input class="field" name="diagnosis1" type="text" maxLength="25"></td>
                     </tr><tr>
                         <td class="titleCell"><label for="procedure1">Procedure[1]:</label></td>
-                        <td class="dataEntry"><input class="field" name="procedure1" type="text" min="2" max="25"></td>
+                        <td class="dataEntry"><input class="field" name="procedure1" type="text" maxLength="25"></td>
                     </tr><tr>
                         <td class="titleCell"><label for="additional">Additional Materials:</label></td>
                         <td class="dataEntry"><textarea></textarea></td>
