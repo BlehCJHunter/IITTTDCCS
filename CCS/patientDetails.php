@@ -1,3 +1,11 @@
+<?php
+$patient = $_GET['patientID']; // TESTING ONLY - CHANGE TO POST ONCE READY
+require 'admin/includes/dbconnect.inc';
+$query = "SELECT * FROM `Patient_Details` WHERE `Patient ID` = " . $patient;
+$result = mysqli_query($conn, $query);
+$conn->close();
+$arr = mysqli_fetch_assoc($result);
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -33,38 +41,34 @@
             Please Enter Patient Details
         </header>
         <main>
-            <form action="somewhere.php" method="POST">
-                <table>
-                    <tr>
 
-                        <td class="titleCell"><label for="username">Patient Full Name:</label></td>
-                        <td colspan="2" class="dataEntry">
-                            <select name="patients">
-                                <option value="patient1">Jane Doe</option>
-                                <option value="patient2">John Deer</option>
-                                <option value="patient3">Jon Buck</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="titleCell"><label for="uniqueID">Patient Unique ID:</label></td>
-                        <td class="dataEntry"><input class="field" name="uniqueID" type="text" maxLength="25"></td>
-                        <td id="extraInfo">Please enter patient UR number, medicare number or other unique identifier.</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" class="infoCell">Please confirm patient identified below is correct before proceeding.</td>
-                    </tr>
-                    <tr>
-                        <td class="titleCell"><label for="ur">UR:</label></td>
-                        <td colspan="2" class="dataEntry"><input class="field" name="ur" type="text" maxLength="25"></td>
-                    </tr>
-                    <tr>
-                        <td class="titleCell"><label for="dateOfBirth">Date of Birth:</label></td>
-                        <td colspan="2" class="dataEntry"><input class="field" name="dateOfBirth" type="text" maxLength="25"></td>
-                    </tr>
-                    <tr>
-                        <td class="titleCell"><label for="address">Addresss:</label></td>
-                        <td colspan="2" class="dataEntry"><textarea></textarea></td>
+            <table>
+                <tr>
+
+                    <td class="titleCell"><label for="username">Patient Full Name:</label></td>
+                    <td colspan="2" class="dataEntry">
+                        <?php echo $arr['First Name'] . " " . $arr['Last Name'] ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="titleCell"><label for="uniqueID">Patient Unique ID:</label></td>
+                    <td class="dataEntry"><input class="field" name="uniqueID" type="text" maxLength="25" value="<?php echo $arr['Medicare No.']; ?>"></td>
+                    <td id="extraInfo">Please enter patient UR number, medicare number or other unique identifier.</td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="infoCell">Please confirm patient identified below is correct before proceeding.</td>
+                </tr>
+                <tr>
+                    <td class="titleCell"><label for="ur">UR:</label></td>
+                    <td colspan="2" class="dataEntry"><input class="field" name="ur" type="text" maxLength="25"></td>
+                </tr>
+                <tr>
+                    <td class="titleCell"><label for="dateOfBirth">Date of Birth:</label></td>
+                    <td colspan="2" class="dataEntry"><input class="field" name="dateOfBirth" type="text" maxLength="25" value="<?php echo $arr['DOB']; ?>"></td>
+                </tr>
+                <tr>
+                    <td class="titleCell"><label for="address">Addresss:</label></td>
+                    <td colspan="2" class="dataEntry"><textarea><?php echo $arr['Street No.'] . " " . $arr['Address'] . ", " . $arr['City']; ?></textarea></td>
                     </tr>
                     <tr>
 			<td colspan="3" class="infoCell">If a paper chart is available, you may scan the patient's UR barcode here:<br>
@@ -72,12 +76,18 @@
                     </tr>
                     <tr>
 			<td colspan="3" class="infoCell">
+                            <form action="patientSubmit.php" method="POST">
+                                <?php
+                                foreach ($arr as $key => $value) {
+                                    echo "<input type=\"hidden\" value=\"" . $value . "\" name=\"" . $key . "\">";
+                                }
+                                ?>
 				<input class="resetButton" type="reset" value="Reset">
 				<input class="confirmButton" name="login" type="submit" value="Confirm">
+                            </form>
 			</td>
                     </tr>		
                 </table>
-            </form>
         </main>
 	<footer>
 		<form action="index.php" method="post">
