@@ -1,3 +1,17 @@
+<?php
+//require 'includes\session.inc';
+//if ($_SESSION['access'] < 2){
+//header("Location: index.php");
+//}
+require 'admin/includes/dbconnect.inc';
+$query = "SELECT * FROM `Symptoms`";
+$sympquer = mysqli_query($conn, $query);
+$query = "SELECT * FROM `Procedure_Codes`";
+$procquer = mysqli_query($conn, $query);
+$conn->close();
+$test = mysqli_fetch_row($sympquer);
+mysqli_data_seek($sympquer, 0);
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -30,7 +44,7 @@
     </head>
     <body>
         <header>
-            Jane Doe | UR 123 45 67 890 | DOB 05APR1984
+            <?php echo $First_Name . " " . $Last_Name . " | UR: " . $ur . " | DOB: " . strtoupper(date_format(date_create($dateOfBirth), "dMY")); ?>
         </header>
         <main>
             <form action="patientSubmit.php" method="POST">
@@ -39,13 +53,27 @@
                     <tr>
 
                         <td class="titleCell"><label for="assessmentDate">Date of assessment:</label></td>
-                        <td class="dataEntry"><input class="field" name="assessmentDate" type="text" maxLength="25"></td>
+                        <td class="dataEntry"><input class="field" name="assessmentDate" type="text" maxLength="25" value="<?php echo date_format(date_create(), "Y-m-d"); ?>"></td>
                     </tr><tr>
-                        <td class="titleCell"><label for="diagnosis1">Diagnosis[1]:</label></td>
-                        <td class="dataEntry"><input class="field" name="diagnosis1" type="text" maxLength="25"></td>
+                        <td class="titleCell"><label for="diagnosis[]">Diagnosis:</label></td>
+                        <td class="dataEntry">
+                            <select multiple name="diagnosis[]">
+                                <?php
+                                while ($row = mysqli_fetch_row($sympquer)) {
+                                    echo "<option value=\"" . $row[0] . "\">" . $row[1] . "</option>";
+                                }
+                                ?>
+                            </select></td>
                     </tr><tr>
-                        <td class="titleCell"><label for="procedure1">Procedure[1]:</label></td>
-                        <td class="dataEntry"><input class="field" name="procedure1" type="text" maxLength="25"></td>
+                        <td class="titleCell"><label for="procedure[]">Procedure:</label></td>
+                        <td class="dataEntry">
+                            <select multiple name="procedure[]">
+                                <?php
+                                while ($row = mysqli_fetch_row($procquer)) {
+                                    echo "<option value=\"" . $row[0] . "\">" . $row[1] . "</option>";
+                                }
+                                ?>
+                            </select></td>
                     </tr><tr>
                         <td class="titleCell"><label for="additional">Additional Materials:</label></td>
                         <td class="dataEntry"><textarea></textarea></td>

@@ -41,7 +41,7 @@ $arr = mysqli_fetch_assoc($result);
             Please Enter Patient Details
         </header>
         <main>
-
+<form action="codingDetails.php" method="POST">
             <table>
                 <tr>
 
@@ -76,7 +76,7 @@ $arr = mysqli_fetch_assoc($result);
                     </tr>
                     <tr>
 			<td colspan="3" class="infoCell">
-                            <form action="patientSubmit.php" method="POST">
+                            
                                 <?php
                                 foreach ($arr as $key => $value) {
                                     echo "<input type=\"hidden\" value=\"" . $value . "\" name=\"" . $key . "\">";
@@ -84,10 +84,11 @@ $arr = mysqli_fetch_assoc($result);
                                 ?>
 				<input class="resetButton" type="reset" value="Reset">
 				<input class="confirmButton" name="login" type="submit" value="Confirm">
-                            </form>
+                            
 			</td>
                     </tr>		
                 </table>
+    </form>
         </main>
 	<footer>
 		<form action="index.php" method="post">
