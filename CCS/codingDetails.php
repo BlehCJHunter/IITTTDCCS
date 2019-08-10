@@ -47,7 +47,7 @@ mysqli_data_seek($sympquer, 0);
             <?php echo $First_Name . " " . $Last_Name . " | UR: " . $ur . " | DOB: " . strtoupper(date_format(date_create($dateOfBirth), "dMY")); ?>
         </header>
         <main>
-            <form action="patientSubmit.php" method="POST">
+            <form action="codingSubmit.php" method="POST">
                 <table>
 
                     <tr>
@@ -64,6 +64,7 @@ mysqli_data_seek($sympquer, 0);
                                 }
                                 ?>
                             </select></td>
+                            <td id="extraInfo">Control-click can let you select more than one procedure/diagnosis</td>
                     </tr><tr>
                         <td class="titleCell"><label for="procedure[]">Procedure:</label></td>
                         <td class="dataEntry">
