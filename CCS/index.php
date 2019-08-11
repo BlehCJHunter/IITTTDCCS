@@ -1,7 +1,7 @@
 <?php
 require 'includes/session.inc';
 // if we want to rename the page later, like landingpage.php or welcome.php
-$URLAccessChange = "https://ccs.geekrunner.net/CCS/index.php";
+$URLAccessChange = "https://ccs.geekrunner.net/CCS/index.php?";
 // godMode 0 will turn off the ability to switch users
 $godMode=1;
 
@@ -30,6 +30,15 @@ function getUser($userName) {
 			break;
 	}
 }
+// Chooses the start date for the doctors patient list
+if ( $accessUserLocal == 2 ) {
+	if ( $_GET['startDate'] ) {
+		$startDate = $_GET['startDate'];
+	} else {
+		$startDate=date("Y-m-d");
+	}
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,22 +52,17 @@ function getUser($userName) {
         <meta name="format-detection" content="telephone=no">
 	<link href="https://fonts.googleapis.com/css?family=Heebo:300&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="css/baseStyle.css">
+	<?php if ($godMode == 1) {echo "<link rel='stylesheet' href='css/godModeStyle.css'>";}?>
+	<?php if ($accessUserLocal == 2) {echo "<link rel='stylesheet' href='css/patientTableStyle.css'>";}?>
+
 	<style type="text/css">
 	<!--
-	nav, main, footer {
-		margin:auto;
-		max-width:960px;
-	}
-	nav ul {
+	body {
 		margin:0;
 	}
-	nav li {
-		display:inline-block;
-		width:23%;
-		text-align:center;
-	}
-	nav a {
-		text-decoration:none;
+	nav, main, footer {
+		margin:0 auto;
+		max-width:960px;
 	}
 	h1, h2 {
 		margin:0;
@@ -66,7 +70,17 @@ function getUser($userName) {
 		font-weight:bold;
 	}
 	header h1 {
-		color:#444;}
+		color:#444;
+	}
+	#mainMenu {
+		line-height:35px;
+	}
+	#mainMenu ul {
+		margin:0; text-align:right;
+	}
+	#mainMenu li {
+		display:inline-block; margin-right:15px;
+	}
 	small, #godMenu a {
 		color:red;
 		text-align:center;
@@ -78,25 +92,84 @@ function getUser($userName) {
 	#welcome h2 {
 		text-transform:capitalize;
 	}
+	#cal, #sendForm, .modifyUsers {
+		margin-left:auto;
+		margin-right:auto;
+		background-color:#fafafa;
+		border:1px solid #bbb;
+		border-radius:15px;
+	}
+	#calTitle {
+		text-align:center;
+		font-size:1.2em;
+	}
+	.calDayName {
+		text-align:center;
+		font-weight:bold;
+	}
+	.calEmptyCell {
+		background-color:#f0f0f0;
+	}
+	.calDateCell {
+		background-color:#fff;
+	}
+	.calDateCell, .calEmptyCell {
+		border:1px solid #bbb;
+	}
+	#calMessage {
+		text-align:center;
+		font-size:0.8em;
+	}
+	.cellDay {
+		padding:3px 0 0 3px;
+		vertical-align:top;
+	}
+	.cellBookedTime, .cellBookedName {
+		padding:2px;
+	}
+	#sendForm {
+		display:table;
+		padding:1em;
+	}
+	.alert {
+		color:red;
+		text-align:center;
+	}
+	.centeredSubmit {
+		text-align:center;
+	}
+	.leftColumn {
+		text-align:right;
+	}
+	.modifyUsers{
+		margin:0 auto;
+		padding:1em;
+	}
 	-->
 	</style>
 </head>
 <body>
 	<nav>
 <?php
-if ($godMode = 1) {
+if ($godMode == 1) {
 	echo "\t\t<small>&nbsp;testing enabled</small><br>
 	\t\t<ul id='godMenu'>
-	\n\t\t\t<li><a href='" . $URLAccessChange . "?AUI=1'>Patient</a></li>
-	\n\t\t\t<li><a href='" . $URLAccessChange . "?AUI=2'>Doctor</a></li>
-	\n\t\t\t<li><a href='" . $URLAccessChange . "?AUI=3'>Admin</a></li>
-	\n\t\t\t<li><a href='" . $URLAccessChange . "?AUI=4'>Support</a></li>\n\t\t</ul>\n";
+	\n\t\t\t<li><a href='" . $URLAccessChange . "AUI=1'>Patient</a></li>
+	\n\t\t\t<li><a href='" . $URLAccessChange . "AUI=2&startDate=" . $startDate . "'>Doctor</a></li>
+	\n\t\t\t<li><a href='" . $URLAccessChange . "AUI=3'>Admin</a></li>
+	\n\t\t\t<li><a href='" . $URLAccessChange . "AUI=4'>Support</a></li>\n\t\t</ul>\n";
 }
 ?>
 	</nav>
 	<header>
-		<h1>Clinical Coder v0.1</h1><br>
+		<h1>Clinical Coder v0.1</h1>
 	</header>
+	<nav id='mainMenu'>
+		<ul>
+			<li>Account</li>
+			<li><form action="index.php" method="post"><input type="hidden" value="logout" name="logout" /><input class="button" type="submit" value="Logout" /></form></li>
+		</ul>
+	</nav>
 	<main>
 	<?php
 		echo "<section id='welcome'><h2>Welcome ";
@@ -109,29 +182,29 @@ if ($godMode = 1) {
 			getUser($accessUserLocal);
 			$x=1;
 		}
-		echo "</section><br>";
-		// Adds an extra space if user switched access to look uniform
-		if ($x==0){echo "<br>";}
+		echo "</section>";
 		// This block grabs the modules that your access level allows
-		if ( $accessUserLocal == 1 )
-			{include 'includes/indexAccess1.inc';}
-		if ( $accessUserLocal >= 1 && $accessUserLocal <= 4 )
-			{include 'includes/indexAccess1234.inc';}
-		if ( $accessUserLocal >= 2 && $accessUserLocal <= 3 )
-			{include 'includes/indexAccess23.inc';}
-		if ( $accessUserLocal == 3 )
-			{include 'includes/indexAccess3.inc';}
+		// Doctor and edit patient info forms
+		if ( $accessUserLocal == 2 )
+			{include 'includes/indexAccess2.inc';}
+		// Booking calendar
+		if ( $accessUserLocal == 1 OR $accessUserLocal == 3 )
+			{include 'includes/indexAccess13.inc';}
+		// admin patient accounts
 		if ( $accessUserLocal >= 3 && $accessUserLocal <= 4 )
 			{include 'includes/indexAccess34.inc';}
+		// admin all accounts
 		if ( $accessUserLocal == 4 )
 			{include 'includes/indexAccess4.inc';}
+		// patient advanced search
+		if ( $accessUserLocal == 2 OR $accessUserLocal == 3 )
+			{include 'includes/indexAccess23.inc';}
+		// view and send doctors forms and create entries to the calendar
+		if ( $accessUserLocal == 3 )
+			{include 'includes/indexAccess3.inc';}
 	?>
 	</main>
 	<footer>
-	<form action="index.php" method="post">
-		<input type="hidden" value="logout" name="logout" />
-		<input class="button" type="submit" value="Logout" />
-	</form>
 	</footer>
 </body>
 </html>

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$debug = 1; // Echo keys etc etc, and destroys the session when revisiting
+$debug = 0; // Echo keys etc etc, and destroys the session when revisiting
 if ($debug) {
     if ($_SESSION['active']) {
         header("Location: https://ccs.geekrunner.net/CCS/index.php");
