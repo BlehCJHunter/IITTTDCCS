@@ -1,7 +1,7 @@
 <div>
 	<table class='modifyUsers'>
 		<tr>
-			<th colspan='4'>Add/Edit a Patient:</th>
+			<th colspan='4'>Add/Edit a Patient:<input type="hidden" name="uType" value="patient"><input type="hidden" name="add" value="1"></th>
 		</tr><tr>
 			<td class='leftColumn'>Given Name:</td>
 			<td><input type='text'></td>

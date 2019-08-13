@@ -13,6 +13,10 @@ if (!isset($_SESSION['timeout'])) {
 if ($_POST["logout"] == "logout") {
     $_SESSION['active'] = 0;
 }
+if (!isset($_SESSION['dbg'])) {
+    $_SESSION['dbg'] = 1; // Change this when we're ready to stop testing
+}
+
 if (!($_SESSION['active'] || isset($_SESSION['active'])) && !$_SESSION['loaded']) { // If the session is both inactive and unloaded, go to the login page
     header("Location: https://ccs.geekrunner.net/CCS/login.php");
     exit();

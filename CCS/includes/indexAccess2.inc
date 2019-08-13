@@ -2,7 +2,8 @@
 require 'admin/includes/dbconnect.inc';
 $query = "SELECT * FROM `Patient_Details`";
 $result = mysqli_query($conn, $query);
-$querytwo = "SELECT * FROM `Procedure_Case_User`";
+$query = "SELECT * FROM `Procedure_Case_User` WHERE `Procedure Date/Time` BETWEEN '" . date("Y-m-d", strtotime($startDate . "-1 day")) . " 00:00:00' AND '" . date("Y-m-d", strtotime($startDate . "+1 day")) . " 23:59:59'";
+$resulttwo = mysqli_query($conn, $query);
 $conn->close();
 ?>
 <div id='PTTitle'>Paperwork</div>
@@ -22,12 +23,18 @@ $conn->close();
             <div id='PTContainer'>
                 <table id='PTTable'>
                     <?php
-                    while ($row = mysqli_fetch_row($result)) {
+                    while ($rowproc = mysqli_fetch_row($resulttwo)) {
+                        do {
+                        $row = mysqli_fetch_row($result);
+                        } while ($row[0] != $rowproc[3]);
+                        $resultDate = $rowproc[5];
                         echo "<tr>";
-                        echo "<td class='PTCell'>" . (is_string($row[1]) && is_string($row[2]) ? $row[1] . ", " . substr($row[2], 0, 1) : "#NAME?") . "</td>";
+                        echo "<td class='PTCell'>" . (is_string($row[1]) && is_string($row[2]) ? $row[2] . ", " . substr($row[1], 0, 1) : "#NAME?") . "</td>";
                         echo "<td class='PTCell'>" . (isset($resultDate) ? $resultDate : "#DATE?") . "</td>";
                         echo "<td class='PTCell'><form><input type='hidden' value='1234'><input class='PTButton' type='submit' value='View'></form></td>";
                         echo "</tr>";
+                        unset($resultDate);
+                        mysqli_data_seek($result, 0);
                     }
                     ?>
                 </table>
