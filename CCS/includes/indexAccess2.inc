@@ -18,7 +18,7 @@ $conn->close();
         <div class='patientTableEmpty'>&nbsp;</div>
     </div>
     <div class='PTrow'>
-        <div class='PTArrowContainer'><a href='<?php echo $URLAccessChange . "AUI=" . $accessUserLocal . "&startDate=" . date("Y-m-d", strtotime($startDate . "-3 days")); ?>'><img class='PTArrowLeft' src='images/left.png' alt=''></a></div>
+        <div class='PTArrowContainer'><a href='<?php echo $URLBuilderPaperArrows . "&startDate=" . date("Y-m-d", strtotime($startDate . "-3 days")); ?>'><img class='PTArrowLeft' src='images/left.png' alt=''></a></div>
         <div id='PTGroup'>
             <div id='PTContainer'>
                 <table id='PTTable'>
@@ -40,8 +40,8 @@ $conn->close();
                 </table>
             </div>
         </div>
-        <div class='PTArrowContainer'><a href='<?php echo $URLAccessChange . "AUI=" . $accessUserLocal . "&startDate=" . date("Y-m-d", strtotime($startDate . "+3 days")); ?>'><img class='PTArrowRight' src='images/right.png' alt=''></a></div>
+        <div class='PTArrowContainer'><a href='<?php echo $URLBuilderPaperArrows . "&startDate=" . date("Y-m-d", strtotime($startDate . "+3 days")); ?>'><img class='PTArrowRight' src='images/right.png' alt=''></a></div>
     </div>
 </div>
-<div style='text-align:right;'><a style="margin-right:50px;" href='<?php echo $URLAccessChange . "AUI=" . $accessUserLocal . "&startDate=" . $startDate . "&advSearch=on"; ?>'>Patient Search</a></div>
+<div style='text-align:right;'><a style="margin-right:50px;" href='<?php echo $URLBuilderAdvSearch; if ( $_GET['advSearch'] ) {}else {echo "&advSearch=on";} ?>'>Patient Search</a></div>
 <br><br>

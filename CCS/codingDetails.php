@@ -47,7 +47,7 @@ mysqli_data_seek($sympquer, 0);
             <?php echo $First_Name . " " . $Last_Name . " | UR: " . $ur . " | DOB: " . strtoupper(date_format(date_create($dateOfBirth), "dMY")); ?>
         </header>
         <main>
-            <form action="codingSubmit.php" method="POST">
+            <form action="codingDetails.php" method="POST">
                 <table>
 
                     <tr>
@@ -95,7 +95,10 @@ mysqli_data_seek($sympquer, 0);
 				<input class="resetButton" type="reset" value="Reset">
 				<input class="confirmButton" name="login" type="submit" value="Confirm">
 			</td>
-		
+		</tr><tr>
+			<td colspan="2" class="infoCell">
+				<a href='patientDetails.php'>1</a> 2
+			</td>
 		</tr>
 
 	</table>

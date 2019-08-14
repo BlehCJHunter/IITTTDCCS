@@ -41,7 +41,7 @@ $arr = mysqli_fetch_assoc($result);
             Please Enter Patient Details
         </header>
         <main>
-<form action="codingDetails.php" method="POST">
+<form action="patientDetails.php" method="POST">
             <table>
                 <tr>
 
@@ -85,6 +85,10 @@ $arr = mysqli_fetch_assoc($result);
 				<input class="resetButton" type="reset" value="Reset">
 				<input class="confirmButton" name="login" type="submit" value="Confirm">
                             
+			</td>
+                    </tr><tr>
+			<td colspan="3" class="infoCell">
+				1 <a href='codingDetails.php'>2</a>
 			</td>
                     </tr>		
                 </table>

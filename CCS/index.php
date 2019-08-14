@@ -37,10 +37,25 @@ if ( $accessUserLocal == 2 ) {
 	}
 }
 // if we want to rename the page later, like landingpage.php or welcome.php
-$URLAccessChange = "https://ccs.geekrunner.net/CCS/index.php?AUI=" . $accessUserLocal;
-if ( $accessUserLocal == 2 ) {$URLAccessChange=$URLAccessChange . $startDate;}
-if ($_GET['help']){$URLAccessChange=$URLAccessChange . "&help=yes";}
-if ($_GET['advSearch']){$URLAccessChange=$URLAccessChange . "&advSearch=on";}
+$URLBuilderBase = "https://ccs.geekrunner.net/CCS/index.php?";
+$URLBuilderHelp=$URLBuilderBase . "AUI=" . $accessUserLocal;
+$URLBuilderAdvSearch=$URLBuilderBase . "AUI=" . $accessUserLocal;
+$URLBuilderPaperArrows=$URLBuilderBase . "AUI=" . $accessUserLocal;
+if ( accessUserLocal == 2 ){
+	$URLBuilderHelp=$URLBuilderBase . "&startDate=" . $startDate;
+	$URLBuilderAdvSearch=$URLBuilderBase . "&startDate=" . $startDate;
+	$URLBuilderLocalAccess="&startDate=" . $startDate;
+}
+if ($_GET['help']=="yes"){
+	$URLBuilderPaperArrows=$URLBuilderBase . "&help=yes";
+	$URLBuilderAdvSearch=$URLBuilderBase . "&help=yes";
+	$URLBuilderLocalAccess=$URLBuilderLocalAccess . "&help=yes";
+}
+if ($_GET['advSearch']){
+	$URLBuilderPaperArrows=$URLBuilderBase . "&advSearch=on";
+	$URLBuilderHelp=$URLBuilderBase . "&advSearch=on";
+	$URLBuilderLocalAccess=$URLBuilderLocalAccess . "&advSearch=on";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -159,10 +174,10 @@ if ($_GET['advSearch']){$URLAccessChange=$URLAccessChange . "&advSearch=on";}
 if ($godMode == 1) {
 	echo "\t\t<small>&nbsp;testing enabled</small><br>
 	\t\t<ul id='godMenu'>
-	\n\t\t\t<li><a href='" . $URLAccessChange . "AUI=1'>Patient</a></li>
-	\n\t\t\t<li><a href='" . $URLAccessChange . "AUI=2&startDate=" . $startDate . "'>Doctor</a></li>
-	\n\t\t\t<li><a href='" . $URLAccessChange . "AUI=3'>Admin</a></li>
-	\n\t\t\t<li><a href='" . $URLAccessChange . "AUI=4'>Support</a></li>\n\t\t</ul>\n";
+	\n\t\t\t<li><a href='" . $URLBuilderBase . "AUI=1" . $URLBuilderLocalAccess . "'>Patient</a></li>
+	\n\t\t\t<li><a href='" . $URLBuilderBase . "AUI=2" . $URLBuilderLocalAccess . "'>Doctor</a></li>
+	\n\t\t\t<li><a href='" . $URLBuilderBase . "AUI=3" . $URLBuilderLocalAccess . "'>Admin</a></li>
+	\n\t\t\t<li><a href='" . $URLBuilderBase . "AUI=4" . $URLBuilderLocalAccess . "'>Support</a></li>\n\t\t</ul>\n";
 }
 ?>
 	</nav>
@@ -171,7 +186,7 @@ if ($godMode == 1) {
 	</header>
 	<nav id='mainMenu'>
 		<ul>
-			<li><a href='<?php echo $URLAccessChange; if ( $_GET['help'] ) {}else {echo "&help=yes";} ?>'>Help</a></li>
+			<li><a href='<?php echo $URLBuilderHelp; if ( $_GET['help'] ) {}else {echo "&help=yes";} ?>'>Help</a></li>
 			<li><form action="index.php" method="post"><input type="hidden" value="logout" name="logout" /><input class="button" type="submit" value="Logout" /></form></li>
 		</ul>
 	</nav>
