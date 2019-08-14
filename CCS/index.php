@@ -3,7 +3,7 @@ require 'includes/session.inc';
 // if we want to rename the page later, like landingpage.php or welcome.php
 $URLAccessChange = "https://ccs.geekrunner.net/CCS/index.php?";
 // godMode 0 will turn off the ability to switch users
-$godMode = $_SESSION['dbg'];
+$godMode=$_SESSION['dbg'];
 
 $accessUserGlobal = $_SESSION['access'];
 // while testing user can set own access

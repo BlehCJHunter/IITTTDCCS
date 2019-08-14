@@ -32,5 +32,5 @@ You can create and destroy admin, doctor and support accounts.<br><br>
 		</tr>
 	</table>
     </form>
-</div>
-<br><br>
+</div><br><br><div>	Audit area</div>
+<br><br><div>	Add machine to the network</div><br><br>

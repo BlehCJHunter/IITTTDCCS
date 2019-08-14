@@ -1,0 +1,11 @@
+#godMenu {
+	margin:0;
+}
+#godMenu li {
+	display:inline-block;
+	width:23%;
+	text-align:center;
+}
+#godMenu a {
+	text-decoration:none;
+}

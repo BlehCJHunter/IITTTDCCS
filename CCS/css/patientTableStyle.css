@@ -1,0 +1,15 @@
+#PTTitle {max-width:960px; font-size:1.2em; margin:0 auto; padding:15px; text-align:center;}
+#PT {display:table; max-width:960px; height:250px; text-align:center;}
+.PTrow {display:table-row;}
+.PTEmpty {display:table-cell; width:60px;}
+#PTGroup {display:table-cell; width:100%; background-color:#f7f7f7;}
+.PTHeading {display:inline-block; width:31.5%; line-height:30px; text-align:center; font-weight:bold}
+#PTScrollSpace {padding-right:18px;}
+.PTArrowContainer {display:table-cell; height:100%; vertical-align:middle;}
+.PTArrowLeft {margin-right:10px;}
+.PTArrowRight {margin-left:10px;}
+#PTContainer {height:250px; overflow-y:scroll;}
+#PTTable {width:100%;}
+.PTCell {width:33%;}
+#PTTable td {border:1px solid #fff;}
+.PTButton {width:90px; height:30px;}

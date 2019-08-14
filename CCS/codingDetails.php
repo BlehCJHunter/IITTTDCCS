@@ -64,7 +64,7 @@ mysqli_data_seek($sympquer, 0);
                                 }
                                 ?>
                             </select></td>
-                            <td id="extraInfo">Control-click can let you select more than one procedure/diagnosis</td>
+                        <td id="extraInfo">Control-click can let you select more than one procedure/diagnosis</td>
                     </tr><tr>
                         <td class="titleCell"><label for="procedure[]">Procedure:</label></td>
                         <td class="dataEntry">
