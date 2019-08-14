@@ -1,7 +1,5 @@
 <?php
 require 'includes/session.inc';
-// if we want to rename the page later, like landingpage.php or welcome.php
-$URLAccessChange = "https://ccs.geekrunner.net/CCS/index.php?";
 // godMode 0 will turn off the ability to switch users
 $godMode=$_SESSION['dbg'];
 
@@ -38,7 +36,11 @@ if ( $accessUserLocal == 2 ) {
 		$startDate=date("Y-m-d");
 	}
 }
-
+// if we want to rename the page later, like landingpage.php or welcome.php
+$URLAccessChange = "https://ccs.geekrunner.net/CCS/index.php?AUI=" . $accessUserLocal;
+if ( $accessUserLocal == 2 ) {$URLAccessChange=$URLAccessChange . $startDate;}
+if ($_GET['help']){$URLAccessChange=$URLAccessChange . "&help=yes";}
+if ($_GET['advSearch']){$URLAccessChange=$URLAccessChange . "&advSearch=on";}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -169,10 +171,7 @@ if ($godMode == 1) {
 	</header>
 	<nav id='mainMenu'>
 		<ul>
-			<li><a href='<?php
-				echo $URLAccessChange . "AUI=" . $accessUserLocal;
-				if ( $accessUserLocal == 2 ) { echo "&startDate=" . $startDate; }
-				if ( $_GET['help'] ) {}else {echo "&help=yes";} ?>'>Help</a></li>
+			<li><a href='<?php echo $URLAccessChange; if ( $_GET['help'] ) {}else {echo "&help=yes";} ?>'>Help</a></li>
 			<li><form action="index.php" method="post"><input type="hidden" value="logout" name="logout" /><input class="button" type="submit" value="Logout" /></form></li>
 		</ul>
 	</nav>

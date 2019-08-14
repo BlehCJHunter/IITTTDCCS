@@ -7,7 +7,7 @@ foreach ($_POST as $key => $value) {
 }
 switch ($uType) {
     case "patient":
-        if ($_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['dbg']) {
+        if (!$delete && ($_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['dbg'])) {
             require 'admin/includes/dbconnect.inc';
             $AAAAAAA = mysqli_query($conn, "SELECT MAX(`Patient ID`) FROM `Patient_Details`");
             $AAAAAA = mysqli_fetch_row($AAAAAAA);
@@ -17,13 +17,30 @@ switch ($uType) {
             $query .= $fName . "', '";
             $query .= $lName . "', '";
             $query .= $unit . "', '";
+            $query .= $addr . "', '";
             $query .= $street . "', '";
             $query .= $city . "', '";
             $query .= $pCode . "', '";
             $query .= $DoB . "', '";
             $query .= $sex . "', '";
-            $query .= $medno . "', '";
+            $query .= $Medno . "', '";
             $query .= $MCIRV . "')";
+            if (mysqli_query($conn, $query)) {
+                echo "Record " . ($add ? "created" : "updated") . " successfully";
+            } else {
+                echo "Error: " . $query . "<br>" . mysqli_error($conn);
+                $conn->close();
+                exit();
+            }
+            $conn->close();
+        } elseif ($delete) {
+            require 'admin/includes/dbconnect.inc';
+            $query = "";
+            $query .= "DELETE FROM `Patient_Details` WHERE `First Name` = '";
+            $query .= $fName . "' AND `Last Name` = '";
+            $query .= $lName . "' AND `Medicare No.` = '";
+            $query .= $Medno . "' AND `DOB` = '";
+            $query .= $DoB . "'";
             if (mysqli_query($conn, $query)) {
                 echo "Record " . ($add ? "created" : "updated") . " successfully";
             } else {
@@ -49,10 +66,11 @@ switch ($uType) {
             $query .= $acc . "', '";
             $query .= $uName . "', '";
             $query .= hash("sha512", $uName . "ZYX" . $pWord . "ABC") . "', '";
+            $query .= date("Y-m-d H:i:s", time()) . "', '";
             $query .= $email . "', '";
             $query .= $phone . "')";
             if (mysqli_query($conn, $query)) {
-                echo "Record " . ($add ? "created" : "updated") . " successfully";
+                echo "Record deleted successfully";
             } else {
                 echo "Error: " . $query . "<br>" . mysqli_error($conn);
                 $conn->close();
