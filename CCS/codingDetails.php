@@ -1,16 +1,42 @@
 <?php
-//require 'includes\session.inc';
+require 'includes/session.inc';
 //if ($_SESSION['access'] < 2){
 //header("Location: index.php");
 //}
+$case = $_POST['case'];
 require 'admin/includes/dbconnect.inc';
 $query = "SELECT * FROM `Symptoms`";
 $sympquer = mysqli_query($conn, $query);
 $query = "SELECT * FROM `Procedure_Codes`";
 $procquer = mysqli_query($conn, $query);
+$query = "SELECT * FROM `Case_Master` WHERE `Case ID` = '" . $case . "'";
+$resultcase = mysqli_query($conn, $query);
+$caserow = mysqli_fetch_assoc($resultcase);
+$querytwo = "SELECT * FROM `Procedure_Case_User` WHERE `Case ID` = '" . $caserow["Case ID"] . "'";
+$result = mysqli_query($conn, $querytwo);
+$querythree = "SELECT * FROM `Patient_Details` WHERE `Patient ID` = '" . $caserow["Patient ID"] . "'";
+$patquer = mysqli_query($conn, $querythree);
+$queryfour = "SELECT * FROM `Symptom_Case_User` WHERE `Case ID` = '" . $caserow["Case ID"] . "'";
+$resultfour = mysqli_query($conn, $queryfour);
 $conn->close();
 $test = mysqli_fetch_row($sympquer);
+$thisprocedure = mysqli_fetch_assoc($result);
+$thissymptom = mysqli_fetch_assoc($resultfour);
+$patient = mysqli_fetch_assoc($patquer);
 mysqli_data_seek($sympquer, 0);
+
+
+if ( $_POST['Save'] ) {
+	echo "Yes";
+}else {
+	echo "No";
+}
+if($_SESSION['dbg']){
+    echo $query . "<br>";
+    echo $querytwo . "<br>";
+    echo $querythree . "<br>";
+    echo $queryfour . "<br>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,10 +70,11 @@ mysqli_data_seek($sympquer, 0);
     </head>
     <body>
         <header>
-            <?php echo $First_Name . " " . $Last_Name . " | UR: " . $ur . " | DOB: " . strtoupper(date_format(date_create($dateOfBirth), "dMY")); ?>
+            <?php echo $patient["First Name"] . " " . $patient["Last Name"] . " | UR: " . $patient[""] . " | DOB: " . strtoupper(date_format(date_create($patient["DOB"]), "dMY")); ?>
         </header>
         <main>
-            <form action="codingDetails.php" method="POST">
+	<?php?>
+            <form action="submitDetails.php" method="POST">
                 <table>
 
                     <tr>
@@ -60,7 +87,7 @@ mysqli_data_seek($sympquer, 0);
                             <select multiple name="diagnosis[]">
                                 <?php
                                 while ($row = mysqli_fetch_row($sympquer)) {
-                                    echo "<option value=\"" . $row[0] . "\">" . $row[1] . "</option>";
+                                    echo "<option " . ($row[0] == $thissymptom["Symptom Code ID"] ? "selected " : "") . " value=\"" . $row[0] . "\">" . $row[1] . "</option>";
                                 }
                                 ?>
                             </select></td>
@@ -71,13 +98,13 @@ mysqli_data_seek($sympquer, 0);
                             <select multiple name="procedure[]">
                                 <?php
                                 while ($row = mysqli_fetch_row($procquer)) {
-                                    echo "<option value=\"" . $row[0] . "\">" . $row[1] . "</option>";
+                                    echo "<option " . ($row[0] == $thisprocedure["Procedure Code ID"] ? "selected " : "") .  "value=\"" . $row[0] . "\">" . $row[1] . "</option>";
                                 }
                                 ?>
                             </select></td>
                     </tr><tr>
                         <td class="titleCell"><label for="additional">Additional Materials:</label></td>
-                        <td class="dataEntry"><textarea></textarea></td>
+                        <td class="dataEntry"><textarea> <?php echo $thisprocedure["Procedure Comments"]; ?></textarea></td>
 		</tr><tr>
 			<td class="titleCell"><label for="status">Patient Status:</label></td>
 			<td class="dataEntry">
@@ -93,16 +120,19 @@ mysqli_data_seek($sympquer, 0);
 		</tr><tr>
 			<td colspan="2" class="infoCell">
 				<input class="resetButton" type="reset" value="Reset">
-				<input class="confirmButton" name="login" type="submit" value="Confirm">
+				<input class="saveButton" type="submit" formaction='saveDetails.php' value='Save'>
+				<input class="confirmButton" name="login" type="submit" value="Finish">
 			</td>
 		</tr><tr>
 			<td colspan="2" class="infoCell">
-				<a href='patientDetails.php'>1</a> 2
+				<input form="AAA" type='hidden' name='case' value='<?php echo $case;?>'><input form="AAA" class='PTButton' type='submit' value='1'> 2<br>
+				<a href="index.php">exit</a>
 			</td>
 		</tr>
 
 	</table>
                 </form>
+            <form id="AAA" action="patientDetails.php" method="post"></form>
 </main>
 	<footer>
 		<form action="index.php" method="post">

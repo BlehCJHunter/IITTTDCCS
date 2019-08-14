@@ -1,8 +1,12 @@
 <?php
-$patient = $_GET['patientID']; // TESTING ONLY - CHANGE TO POST ONCE READY
+require 'includes/session.inc';
+$case = $_POST['case'];
 require 'admin/includes/dbconnect.inc';
-$query = "SELECT * FROM `Patient_Details` WHERE `Patient ID` = " . $patient;
-$result = mysqli_query($conn, $query);
+$query = "SELECT * FROM `Case_Master` WHERE `Case ID` = '" . $case . "'";
+$resultcase = mysqli_query($conn, $query);
+$caserow = mysqli_fetch_assoc($resultcase);
+$querytwo = "SELECT * FROM `Patient_Details` WHERE `Patient ID` = '" . $caserow["Patient ID"] . "'";
+$result = mysqli_query($conn, $querytwo);
 $conn->close();
 $arr = mysqli_fetch_assoc($result);
 ?>
@@ -41,7 +45,7 @@ $arr = mysqli_fetch_assoc($result);
             Please Enter Patient Details
         </header>
         <main>
-<form action="patientDetails.php" method="POST">
+<form action="submitDetails.php" method="POST">
             <table>
                 <tr>
 
@@ -83,16 +87,19 @@ $arr = mysqli_fetch_assoc($result);
                                 }
                                 ?>
 				<input class="resetButton" type="reset" value="Reset">
-				<input class="confirmButton" name="login" type="submit" value="Confirm">
+				<input class="saveButton" type="submit" formaction='saveDetails.php' value='Save'>
+				<input class="confirmButton" name="login" type="submit" value="Next">
                             
 			</td>
                     </tr><tr>
 			<td colspan="3" class="infoCell">
-				1 <a href='codingDetails.php'>2</a>
+				1 <input form="AAA" type='hidden' name='case' value='<?php echo $case;?>'><input form="AAA" class='PTButton' type='submit' value='2'><br>
+				<a href="index.php">exit</a>
 			</td>
                     </tr>		
                 </table>
     </form>
+    <form id="AAA" action="codingDetails.php" method="post"></form>
         </main>
 	<footer>
 		<form action="index.php" method="post">

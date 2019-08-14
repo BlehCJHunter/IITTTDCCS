@@ -26,12 +26,12 @@ $conn->close();
                     while ($rowproc = mysqli_fetch_row($resulttwo)) {
                         do {
                         $row = mysqli_fetch_row($result);
-                        } while ($row[0] != $rowproc[3]);
+                        } while ($row[0] != $rowproc[4]);
                         $resultDate = $rowproc[5];
                         echo "<tr>";
                         echo "<td class='PTCell'>" . (is_string($row[1]) && is_string($row[2]) ? $row[2] . ", " . substr($row[1], 0, 1) : "#NAME?") . "</td>";
                         echo "<td class='PTCell'>" . (isset($resultDate) ? $resultDate : "#DATE?") . "</td>";
-                        echo "<td class='PTCell'><form action=\"codingDetails.php\" method=\"post\"><input type='hidden' name='case' value='" . $rowproc[0] . "'><input class='PTButton' type='submit' value='View'></form></td>";
+                        echo "<td class='PTCell'><form action=\"patientDetails.php\" method=\"post\"><input type='hidden' name='case' value='" . $rowproc[2] . "'><input class='PTButton' type='submit' value='View'></form></td>";
                         echo "</tr>";
                         unset($resultDate);
                         mysqli_data_seek($result, 0);
