@@ -11,6 +11,7 @@ if ($debug) {
 
 $usr = $_POST["usr"];
 $pwd = $_POST["pwd"];
+$session = $_SESSION['active']; //Mike
 if (!empty($usr) xor ! empty($pwd)) {
     if (empty($usr) && empty($pwd)) {
         $message = "&nbsp;";
@@ -50,6 +51,7 @@ if (!empty($usr) xor ! empty($pwd)) {
         echo "Key State: " . $key . "<br>";
         echo "Key: " . $key["Password Token"] . "<br>";
         echo "User Key: " . $userkey . "<br>";
+        echo "Key Difference: " . strcmp($userkey, $key["Password Token"]) . "<br>";
         echo "Session State: " . @$_SESSION['active'] . "<br>";
         echo "User: " . $usr . "<br>";
         echo "Pwd: " . $pwd . "<br>";
@@ -62,7 +64,7 @@ if (!empty($usr) xor ! empty($pwd)) {
         } else if (!$active) {
             if (!$nousr && !$nopwd) {
                 if ($userkey == $key["Password Token"]) {
-                    $_SESSION['active'] = "1";
+                    $_SESSION['active'] = 1;
                     $_SESSION['key'] = $key["Password Token"];
                     header("Location: index.php");
                     exit();
@@ -74,7 +76,7 @@ if (!empty($usr) xor ! empty($pwd)) {
             }
         }
     } else {
-        if (empty($_SESSION['usr']) && empty($_SESSION['pwd'])) {
+        if (empty($usr) && empty($pwd)) {
             $message = "&nbsp;";
         } else {
             if (!$nousr && !$nopwd) {

@@ -145,6 +145,9 @@ if ( $accessUserLocal == 2 ) {
 		margin:0 auto;
 		padding:1em;
 	}
+	#formCheckDel {
+		color:red;
+	}
 	-->
 	</style>
 </head>
@@ -166,7 +169,10 @@ if ($godMode == 1) {
 	</header>
 	<nav id='mainMenu'>
 		<ul>
-			<li>Account</li>
+			<li><a href='<?php
+				echo $URLAccessChange . "AUI=" . $accessUserLocal;
+				if ( $accessUserLocal == 2 ) { echo "&startDate=" . $startDate; }
+				if ( $_GET['help'] ) {}else {echo "&help=yes";} ?>'>Help</a></li>
 			<li><form action="index.php" method="post"><input type="hidden" value="logout" name="logout" /><input class="button" type="submit" value="Logout" /></form></li>
 		</ul>
 	</nav>
@@ -184,6 +190,9 @@ if ($godMode == 1) {
 		}
 		echo "</section>";
 		// This block grabs the modules that your access level allows
+		// If you request help
+		if ( $_GET['help'] == "yes" )
+			{include 'includes/indexAccess1234.inc';}
 		// Doctor and edit patient info forms
 		if ( $accessUserLocal == 2 )
 			{include 'includes/indexAccess2.inc';}

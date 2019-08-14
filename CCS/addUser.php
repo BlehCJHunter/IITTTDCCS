@@ -8,18 +8,22 @@ foreach ($_POST as $key => $value) {
 switch ($uType) {
     case "patient":
         if ($_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['dbg']) {
+            require 'admin/includes/dbconnect.inc';
+            $AAAAAAA = mysqli_query($conn, "SELECT MAX(`Patient ID`) FROM `Patient_Details`");
+            $AAAAAA = mysqli_fetch_row($AAAAAAA);
             $query = "";
-            $query .= $add ? "INSERT INTO `Patient_Details` VALUES ('" : "UPDATE `Users` ";
-            $query .= "11', '";
+            $query .= $add ? "INSERT INTO `Patient_Details` VALUES ('" : "UPDATE `Patient_Details` ";
+            $query .= ($AAAAAA[0] + 1) . "', '";
             $query .= $fName . "', '";
             $query .= $lName . "', '";
-            $query .= $title . "', '";
-            $query .= $acc . "', '";
-            $query .= $uName . "', '";
-            $query .= hash("sha512", $uName . "ZYX" . $pWord . "ABC") . "', '";
-            $query .= $email . "', '";
-            $query .= $phone . "')";
-            require 'admin/includes/dbconnect.inc';
+            $query .= $unit . "', '";
+            $query .= $street . "', '";
+            $query .= $city . "', '";
+            $query .= $pCode . "', '";
+            $query .= $DoB . "', '";
+            $query .= $sex . "', '";
+            $query .= $medno . "', '";
+            $query .= $MCIRV . "')";
             if (mysqli_query($conn, $query)) {
                 echo "Record " . ($add ? "created" : "updated") . " successfully";
             } else {
