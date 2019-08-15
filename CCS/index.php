@@ -3,6 +3,7 @@ require 'includes/session.inc';
 // godMode 0 will turn off the ability to switch users
 $godMode=$_SESSION['dbg'];
 
+// Holds a variable on the level of access a user has on the page
 $accessUserGlobal = $_SESSION['access'];
 // while testing user can set own access
 if ( $godMode == 1 && $_GET['AUI'] ) {
@@ -37,24 +38,40 @@ if ( $accessUserLocal == 2 ) {
 	}
 }
 // if we want to rename the page later, like landingpage.php or welcome.php
+$linkHelp=$_GET['help'];
+$linkAdvSearch=$_GET['advSearch'];
+$linkComplaint=$_GET['complaint'];
+
 $URLBuilderBase = "https://ccs.geekrunner.net/CCS/index.php?";
-$URLBuilderHelp=$URLBuilderBase . "AUI=" . $accessUserLocal;
-$URLBuilderAdvSearch=$URLBuilderBase . "AUI=" . $accessUserLocal;
-$URLBuilderPaperArrows=$URLBuilderBase . "AUI=" . $accessUserLocal;
-if ( accessUserLocal == 2 ){
-	$URLBuilderHelp=$URLBuilderBase . "&startDate=" . $startDate;
-	$URLBuilderAdvSearch=$URLBuilderBase . "&startDate=" . $startDate;
+$URLBuilderHelp = $URLBuilderBase . "AUI=" . $accessUserLocal;
+$URLBuilderComplaint = $URLBuilderBase . "AUI=" . $accessUserLocal;
+$URLBuilderPaperArrows = $URLBuilderBase . "AUI=" . $accessUserLocal;
+$URLBuilderAdvSearch = $URLBuilderBase . "AUI=" . $accessUserLocal;
+
+if ( $accessUserLocal == 2 ){
 	$URLBuilderLocalAccess="&startDate=" . $startDate;
+	$URLBuilderComplaint=$URLBuilderComplaint . "&startDate=" . $startDate;
+	$URLBuilderHelp=$URLBuilderHelp . "&startDate=" . $startDate;
+	$URLBuilderPaperArrows=$URLBuilderPaperArrows . "&startDate=" . $startDate;
+	$URLBuilderAdvSearch=$URLBuilderAdvSearch . "&startDate=" . $startDate;
 }
-if ($_GET['help']=="yes"){
-	$URLBuilderPaperArrows=$URLBuilderBase . "&help=yes";
-	$URLBuilderAdvSearch=$URLBuilderBase . "&help=yes";
-	$URLBuilderLocalAccess=$URLBuilderLocalAccess . "&help=yes";
-}
-if ($_GET['advSearch']){
-	$URLBuilderPaperArrows=$URLBuilderBase . "&advSearch=on";
-	$URLBuilderHelp=$URLBuilderBase . "&advSearch=on";
+if ($linkAdvSearch=="on" && $accessUserLocal == 2 || $accessUserLocal == 4){
 	$URLBuilderLocalAccess=$URLBuilderLocalAccess . "&advSearch=on";
+	$URLBuilderComplaint=$URLBuilderComplaint . "&advSearch=on";
+	$URLBuilderHelp=$URLBuilderHelp . "&advSearch=on";
+	$URLBuilderPaperArrows=$URLBuilderPaperArrows . "&advSearch=on";
+}
+if ($linkHelp=="yes"){
+	$URLBuilderLocalAccess=$URLBuilderLocalAccess . "&help=yes";
+	$URLBuilderComplaint=$URLBuilderComplaint . "&help=yes";
+	$URLBuilderPaperArrows=$URLBuilderPaperArrows . "&help=yes";
+	$URLBuilderAdvSearch=$URLBuilderAdvSearch . "&help=yes";
+}
+if ($linkComplaint == 1 && $linkHelp =="yes"){
+	$URLBuilderLocalAccess=$URLBuilderLocalAccess . "&complaint=1";
+	$URLBuilderHelp=$URLBuilderHelp . "&complaint=1";
+	$URLBuilderPaperArrows=$URLBuilderPaperArrows . "&complaint=1";
+	$URLBuilderAdvSearch=$URLBuilderAdvSearch . "&complaint=1";
 }
 ?>
 <!DOCTYPE html>
@@ -109,9 +126,10 @@ if ($_GET['advSearch']){
 	#welcome h2 {
 		text-transform:capitalize;
 	}
-	#cal, #sendForm, .modifyUsers {
+	#cal, #sendForm, .modifyUsers, #auditForm, #help {
 		margin-left:auto;
 		margin-right:auto;
+		max-width:960px;
 		background-color:#fafafa;
 		border:1px solid #bbb;
 		border-radius:15px;
@@ -164,6 +182,21 @@ if ($_GET['advSearch']){
 	}
 	#formCheckDel {
 		color:red;
+	}
+	#help {
+		max-width:515px;
+		padding:2em;
+	}
+	#helpTextArea {
+		width:90%;
+		height:150px;
+		margin-top:1em;
+	}
+	#machineAccessTable {
+		margin:0 auto;
+	}
+	#machineAccessTable td{
+		padding:.2em .5em;
 	}
 	-->
 	</style>
