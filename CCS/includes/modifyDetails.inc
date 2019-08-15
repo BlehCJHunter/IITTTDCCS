@@ -4,6 +4,8 @@ $ref = htmlspecialchars(stripslashes(strip_tags($_SERVER['HTTP_REFERER'])));
 foreach ($_POST as $key => $value) {
     ${htmlspecialchars(stripslashes(strip_tags($key)))} = htmlspecialchars(stripslashes(strip_tags($value)));
 }
+$f1 = 1; //First?
+$f2 = 1;
 switch ($loc) {
     case 'Next':
         $target = 'Location: codingDetails.php?case=' . $CID;
@@ -38,24 +40,30 @@ switch ($ref) {
         }
         $query = "UPDATE `Patient_Details` SET ";
         if (isset($uniqueID) && strlen($uniqueID) > 3) {
-            $query .= "`Medicare No.` = '" . $uniqueID . "', ";
+            $query .= ($f1 ? "" : ", ") . "`Medicare No.` = '" . $uniqueID . "'";
+            $f1 = 0;
         }
         if (isset($dateOfBirth) && strlen($dateOfBirth) > 3) {
-            $query .= "`DOB` = '" . $dateOfBirth . "', ";
+            $query .= ($f1 ? "" : ", ") . "`DOB` = '" . $dateOfBirth . "'";
+            $f1 = 0;
         }
         if (isset($unit) && strlen($unit) > 0) {
-            $query .= "`Unit No.` = '" . $unit . "', ";
+            $query .= ($f1 ? "" : ", ") . "`Unit No.` = '" . $unit . "'";
+            $f1 = 0;
         }
         if (isset($num) && strlen($num) > 0) {
-            $query .= "`Street No.` = '" . $num . "', ";
+            $query .= ($f1 ? "" : ", ") . "`Street No.` = '" . $num . "'";
+            $f1 = 0;
         }
         if (isset($st) && strlen($st) > 0) {
-            $query .= "`Address` = '" . $st . "', ";
+            $query .= ($f1 ? "" : ", ") . "`Address` = '" . $st . "'";
+            $f1 = 0;
         }
         if (isset($city) && strlen($city) > 0) {
-            $query .= "`City` = '" . $city . "' ";
+            $query .= ($f1 ? "" : ", ") . "`City` = '" . $city . "'";
+            $f1 = 0;
         }
-        $query .= "WHERE `Patient ID` = '" . $PID . "'";
+        $query .= " WHERE `Patient ID` = '" . $PID . "'";
         require 'admin/includes/dbconnect.inc';
         if (mysqli_query($conn, $query)) {
             echo "Record updated successfully";
@@ -69,23 +77,29 @@ switch ($ref) {
         $queryone = "UPDATE `Procedure_Case_User` SET ";
         $querytwo = "UPDATE `Symptom_Case_User` SET ";
         if (isset($assessmentDate) && strlen($assessmentDate) > 0) {
-            $queryone .= "`Procedure Date/Time` = '" . $assessmentDate . "', ";
-            $querytwo .= "`Date/Time Submitted` = '" . $assessmentDate . "', ";
+            $queryone .= ($f1 ? "" : ", ") . "`Procedure Date/Time` = '" . $assessmentDate . "'";
+            $querytwo .= ($f2 ? "" : ", ") . "`Date/Time Submitted` = '" . $assessmentDate . "'";
+            $f1 = 0;
+            $f2 = 0;
         }
         if (isset($procedure)) {
-            $queryone .= "`Procedure Code ID` = '" . $_POST['procedure'][0] . "', ";
+            $queryone .= ($f1 ? "" : ", ") . "`Procedure Code ID` = '" . $_POST['procedure'][0] . "'";
+            $f1 = 0;
         }
         if (isset($diagnosis)) {
-            $querytwo .= "`Symptom Code ID` = '" . $_POST['diagnosis'][0] . "', ";
+            $querytwo .= ($f2 ? "" : ", ") . "`Symptom Code ID` = '" . $_POST['diagnosis'][0] . "'";
+            $f2 = 0;
         }
         if (isset($pcomments) && strlen($pcomments) > 0) {
-            $queryone .= "`Procedure Comments` = '" . $pcomments . "' ";
+            $queryone .= ($f1 ? "" : ", ") . "`Procedure Comments` = '" . trim($pcomments) . "'";
+            $f1 = 0;
         }
         if (isset($scomments) && strlen($scomments) > 0) {
-            $querytwo .= "`Symptom Comments` = '" . $scomments . "' ";
+            $querytwo .= ($f2 ? "" : ", ") . "`Symptom Comments` = '" . trim($scomments) . "'";
+            $f2 = 0;
         }
-        $queryone .= "WHERE `Case ID` = '" . $CID . "'";
-        $querytwo .= "WHERE `Case ID` = '" . $CID . "'";
+        $queryone .= " WHERE `Case ID` = '" . $CID . "'";
+        $querytwo .= " WHERE `Case ID` = '" . $CID . "'";
         require 'admin/includes/dbconnect.inc';
         if (mysqli_query($conn, $queryone)) {
             echo "Record updated successfully";

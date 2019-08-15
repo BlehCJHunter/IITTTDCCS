@@ -36,7 +36,6 @@ $conn->close();
                         foreach ($rowproc as $key => $value) {
                             if (empty($value) || strlen($value) == 0) {
                                 $state = "In Progress";
-                                echo $key . ": " . $value;
                             }
                         }
                         $resultDate = $rowcase[3];
