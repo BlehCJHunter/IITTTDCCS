@@ -26,17 +26,24 @@ $conn->close();
                 <table id='PTTable'>
                     <?php
                     while ($rowcase = mysqli_fetch_row($resulttwo)) {
+                        $state = (strlen($rowcase[4]) > 1 ? "Closed" : "View");
                         do {
                             $row = mysqli_fetch_row($result);
                         } while ($row[0] != $rowcase[1]);
                         do {
                             $rowproc = mysqli_fetch_row($resultthree);
                         } while ($rowproc[2] != $rowcase[0]);
+                        foreach ($rowproc as $key => $value) {
+                            if (empty($value) || strlen($value) == 0) {
+                                $state = "In Progress";
+                                echo $key . ": " . $value;
+                            }
+                        }
                         $resultDate = $rowcase[3];
                         echo "<tr>";
                         echo "<td class='PTCell'>" . (is_string($row[1]) && is_string($row[2]) ? $row[2] . ", " . substr($row[1], 0, 1) : "#NAME?") . "</td>";
                         echo "<td class='PTCell'>" . (isset($resultDate) ? $resultDate : "#DATE?") . "</td>";
-                        echo "<td class='PTCell'><form action=\"patientDetails.php\" method=\"post\"><input type='hidden' name='case' value='" . $rowproc[2] . "'><input class='PTButton' type='submit' value='" . (strlen($rowcase[4]) > 1 ? "Closed" : "View") . "'></form></td>";
+                        echo "<td class='PTCell'><form action=\"patientDetails.php\" method=\"post\"><input type='hidden' name='case' value='" . $rowproc[2] . "'><input class='PTButton' type='submit' value='" . $state . "'></form></td>";
                         echo "</tr>";
                         unset($resultDate);
                         mysqli_data_seek($result, 0);
@@ -48,5 +55,10 @@ $conn->close();
         <div class='PTArrowContainer'><a href='<?php echo $URLBuilderPaperArrows . "&startDate=" . date("Y-m-d", strtotime($startDate . "+3 days")); ?>'><img class='PTArrowRight' src='images/right.png' alt=''></a></div>
     </div>
 </div>
-<div style='text-align:right;'><a style="margin-right:50px;" href='<?php echo $URLBuilderAdvSearch; if ( $linkAdvSearch ) {}else {echo "&advSearch=on";} ?>'>Patient Search</a></div>
+<div style='text-align:right;'><a style="margin-right:50px;" href='<?php echo $URLBuilderAdvSearch;
+                    if ($linkAdvSearch) {
+                        
+                    } else {
+                        echo "&advSearch=on";
+                    } ?>'>Patient Search</a></div>
 <br><br>
