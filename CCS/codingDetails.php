@@ -3,7 +3,7 @@ require 'includes/session.inc';
 //if ($_SESSION['access'] < 2){
 //header("Location: index.php");
 //}
-$case = $_POST['case'];
+$case = (isset($_POST['case']) ? $_POST['case'] : $_GET['case']);
 require 'admin/includes/dbconnect.inc';
 $query = "SELECT * FROM `Symptoms`";
 $sympquer = mysqli_query($conn, $query);
@@ -75,12 +75,13 @@ if($_SESSION['dbg']){
         <main>
 	<?php?>
             <form action="submitDetails.php" method="POST">
+                <input type='hidden' name='CID' value='<?php echo $case;?>'>
                 <table>
 
                     <tr>
 
                         <td class="titleCell"><label for="assessmentDate">Date of assessment:</label></td>
-                        <td class="dataEntry"><input class="field" name="assessmentDate" type="text" maxLength="25" value="<?php echo date_format(date_create(), "Y-m-d"); ?>"></td>
+                        <td class="dataEntry"><input class="field" name="assessmentDate" type="text" maxLength="25" value="<?php echo ( strlen($thisprocedure["Procedure Date/Time"]) > 0 ? $thisprocedure["Procedure Date/Time"] : date_format(date_create(), "Y-m-d H:i:s")); ?>"></td>
                     </tr><tr>
                         <td class="titleCell"><label for="diagnosis[]">Diagnosis:</label></td>
                         <td class="dataEntry">
@@ -104,7 +105,7 @@ if($_SESSION['dbg']){
                             </select></td>
                     </tr><tr>
                         <td class="titleCell"><label for="additional">Additional Materials:</label></td>
-                        <td class="dataEntry"><textarea> <?php echo $thisprocedure["Procedure Comments"]; ?></textarea></td>
+                        <td class="dataEntry"><textarea name="pcomments"> <?php echo $thisprocedure["Procedure Comments"]; ?></textarea></td>
 		</tr><tr>
 			<td class="titleCell"><label for="status">Patient Status:</label></td>
 			<td class="dataEntry">
@@ -116,12 +117,12 @@ if($_SESSION['dbg']){
 			</td>
 		</tr><tr>
 			<td class="titleCell"><label for="address">Notes for clinical<br>coding team:</label></td>
-			<td class="dataEntry"><textarea></textarea></td>
+			<td class="dataEntry"><textarea name="scomments"><?php echo $thissymptom["Symptom Comments"]; ?></textarea></td>
 		</tr><tr>
 			<td colspan="2" class="infoCell">
 				<input class="resetButton" type="reset" value="Reset">
 				<input class="saveButton" type="submit" formaction='saveDetails.php' value='Save'>
-				<input class="confirmButton" name="login" type="submit" value="Finish">
+				<input class="confirmButton" name="loc" type="submit" value="Finish">
 			</td>
 		</tr><tr>
 			<td colspan="2" class="infoCell">

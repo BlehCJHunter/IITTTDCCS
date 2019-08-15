@@ -46,6 +46,8 @@ $arr = mysqli_fetch_assoc($result);
         </header>
         <main>
 <form action="submitDetails.php" method="POST">
+    <input type='hidden' name='PID' value='<?php echo $arr['Patient ID'];?>'>
+    <input type='hidden' name='CID' value='<?php echo $case;?>'>
             <table>
                 <tr>
 
@@ -64,7 +66,7 @@ $arr = mysqli_fetch_assoc($result);
                 </tr>
                 <tr>
                     <td class="titleCell"><label for="ur">UR:</label></td>
-                    <td colspan="2" class="dataEntry"><input class="field" name="ur" type="text" maxLength="25"></td>
+                    <td colspan="2" class="dataEntry"><input class="field" name="ur" type="text" maxLength="25" value="<?php echo $arr['Medicare No.']; ?>"></td>
                 </tr>
                 <tr>
                     <td class="titleCell"><label for="dateOfBirth">Date of Birth:</label></td>
@@ -72,7 +74,7 @@ $arr = mysqli_fetch_assoc($result);
                 </tr>
                 <tr>
                     <td class="titleCell"><label for="address">Addresss:</label></td>
-                    <td colspan="2" class="dataEntry"><textarea><?php echo $arr['Street No.'] . " " . $arr['Address'] . ", " . $arr['City']; ?></textarea></td>
+                    <td colspan="2" class="dataEntry"><textarea name="addr"><?php echo (strlen($arr['Unit No.']) > 0 ? $arr['Unit No.'] . " " : "") . $arr['Street No.'] . " " . $arr['Address'] . ", " . $arr['City']; ?></textarea></td>
                     </tr>
                     <tr>
 			<td colspan="3" class="infoCell">If a paper chart is available, you may scan the patient's UR barcode here:<br>
@@ -88,7 +90,7 @@ $arr = mysqli_fetch_assoc($result);
                                 ?>
 				<input class="resetButton" type="reset" value="Reset">
 				<input class="saveButton" type="submit" formaction='saveDetails.php' value='Save'>
-				<input class="confirmButton" name="login" type="submit" value="Next">
+				<input class="confirmButton" name="loc" type="submit" value="Next">
                             
 			</td>
                     </tr><tr>

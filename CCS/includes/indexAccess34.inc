@@ -5,12 +5,12 @@
 			<th colspan='4'>Add/Edit a Patient:<input type="hidden" name="uType" value="patient"><input type="hidden" name="add" value="1"></th>
 		</tr><tr>
 			<td class='leftColumn'>Given Name:</td>
-                        <td><input name="fName" placeholder="John" type='text' required></td>
+                        <td><input name="fName" placeholder="John" type='text'></td>
 			<td class='leftColumn'>Date of birth:</td>
-			<td><input name="DoB" placeholder="YYYY-MM-DD" type="text" required></td>
+			<td><input name="DoB" placeholder="YYYY-MM-DD" type="text"></td>
 		</tr><tr>
 			<td class='leftColumn'>Family Name:</td>
-			<td><input name="lName" placeholder="Smith" type='text' required></td>
+			<td><input name="lName" placeholder="Smith" type='text'></td>
 			<td class='leftColumn'>Sex:</td>
 			<td><input type='radio' name='sex' value='m'>Male<input type='radio' name='sex' value='f'>Female<input type='radio' name='sex' value='o'>Other<!-- Because someone WILL yell about this --></td>
 		</tr><tr>
@@ -33,7 +33,7 @@
 		</tr><tr>
 			<td class='leftColumn'>Medical No.:</td>
 			<td><input name="Medno" placeholder="1234567891" type='text' required></td>
-			<td class='leftColumn' rowspan='2'><input type='submit' value='Search'></td>
+			<td class='leftColumn' rowspan='2'><input name="search" type='submit' value='1'></td>
 			<td rowspan='2'><input type='submit' value='Update Patient'><input name="delete" type='checkbox'><span id='formCheckDel'>Del</span></td>
 		</tr><tr>
 			<td class='leftColumn'>Medicare IRV:</td>

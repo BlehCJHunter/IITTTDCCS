@@ -36,11 +36,9 @@ switch ($uType) {
         } elseif ($delete) {
             require 'admin/includes/dbconnect.inc';
             $query = "";
-            $query .= "DELETE FROM `Patient_Details` WHERE `First Name` = '";
-            $query .= $fName . "' AND `Last Name` = '";
-            $query .= $lName . "' AND `Medicare No.` = '";
-            $query .= $Medno . "' AND `DOB` = '";
-            $query .= $DoB . "'";
+            $query .= "DELETE FROM `Patient_Details` WHERE ";
+            $query .= "`Medicare No.` = '";
+            $query .= $Medno . "'";
             if (mysqli_query($conn, $query)) {
                 echo "Record " . ($add ? "created" : "updated") . " successfully";
             } else {
