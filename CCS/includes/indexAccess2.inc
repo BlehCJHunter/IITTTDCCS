@@ -43,5 +43,5 @@ $conn->close();
         <div class='PTArrowContainer'><a href='<?php echo $URLBuilderPaperArrows . "&startDate=" . date("Y-m-d", strtotime($startDate . "+3 days")); ?>'><img class='PTArrowRight' src='images/right.png' alt=''></a></div>
     </div>
 </div>
-<div style='text-align:right;'><a style="margin-right:50px;" href='<?php echo $URLBuilderAdvSearch; if ( $_GET['advSearch'] ) {}else {echo "&advSearch=on";} ?>'>Patient Search</a></div>
+<div style='text-align:right;'><a style="margin-right:50px;" href='<?php echo $URLBuilderAdvSearch; if ( $linkAdvSearch ) {}else {echo "&advSearch=on";} ?>'>Patient Search</a></div>
 <br><br>
