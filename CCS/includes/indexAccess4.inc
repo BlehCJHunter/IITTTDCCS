@@ -1,4 +1,3 @@
-You can create and destroy admin, doctor and support accounts.<br><br>
 <div>
     <form action="addUser.php" method="post">
 	<table class='modifyUsers'>
