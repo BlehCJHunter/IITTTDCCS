@@ -93,7 +93,7 @@ switch ($uType) {
         } elseif ($delete) {
             require 'admin/includes/dbconnect.inc';
             $query = "";
-            $query .= "DELETE FROM `Patient_Details` WHERE ";
+            $query .= "DELETE FROM `Users` WHERE ";
             $query .= "`Username` = '";
             $query .= $uName . "'";
             if (mysqli_query($conn, $query)) {
