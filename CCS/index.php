@@ -37,6 +37,20 @@ if ( $accessUserLocal == 2 ) {
 		$startDate=date("Y-m-d");
 	}
 }
+if ( $accessUserLocal == 3 ) {
+	if ( $_GET['appointmentCal'] ) {
+		$appointmentCal = $_GET['appointmentCal'];
+		$appointmentCal = explode("-", $appointmentCal);
+		$adminCalYear = $appointmentCal[0];
+		$adminCalMonth = $appointmentCal[1];
+		$adminCalDay = $appointmentCal[2];
+	} else {
+		$adminCalYear=date('Y');
+		$adminCalMonth=date('m');
+		$adminCalDay=date('d');
+	}
+	$adminCalDate=$adminCalYear . "-" . $adminCalMonth . "-" . $adminCalDay;
+}
 // if we want to rename the page later, like landingpage.php or welcome.php
 $linkHelp=$_GET['help'];
 $linkAdvSearch=$_GET['advSearch'];
@@ -47,6 +61,7 @@ $URLBuilderHelp = $URLBuilderBase . "AUI=" . $accessUserLocal;
 $URLBuilderComplaint = $URLBuilderBase . "AUI=" . $accessUserLocal;
 $URLBuilderPaperArrows = $URLBuilderBase . "AUI=" . $accessUserLocal;
 $URLBuilderAdvSearch = $URLBuilderBase . "AUI=" . $accessUserLocal;
+$URLBuilderAdminCalDate = $URLBuilderBase . "AUI=" . $accessUserLocal;
 
 if ( $accessUserLocal == 2 ){
 	$URLBuilderLocalAccess="&startDate=" . $startDate;
@@ -55,23 +70,32 @@ if ( $accessUserLocal == 2 ){
 	$URLBuilderPaperArrows=$URLBuilderPaperArrows . "&startDate=" . $startDate;
 	$URLBuilderAdvSearch=$URLBuilderAdvSearch . "&startDate=" . $startDate;
 }
+if ( $accessUserLocal == 3 ){
+	$URLBuilderLocalAccess="&adminCalDate=" . $adminCalDate;
+	$URLBuilderComplaint=$URLBuilderComplaint . "&adminCalDate=" . $adminCalDate;
+	$URLBuilderHelp=$URLBuilderHelp . "&adminCalDate=" . $adminCalDate;
+	$URLBuilderAdvSearch=$URLBuilderAdvSearch . "&adminCalDate=" . $adminCalDate;
+}
 if ($linkAdvSearch=="on" && $accessUserLocal == 2 || $accessUserLocal == 4){
 	$URLBuilderLocalAccess=$URLBuilderLocalAccess . "&advSearch=on";
 	$URLBuilderComplaint=$URLBuilderComplaint . "&advSearch=on";
 	$URLBuilderHelp=$URLBuilderHelp . "&advSearch=on";
 	$URLBuilderPaperArrows=$URLBuilderPaperArrows . "&advSearch=on";
+	$URLBuilderAdminCalDate=$URLBuilderAdminCalDate . "&advSearch=on";
 }
 if ($linkHelp=="yes"){
 	$URLBuilderLocalAccess=$URLBuilderLocalAccess . "&help=yes";
 	$URLBuilderComplaint=$URLBuilderComplaint . "&help=yes";
 	$URLBuilderPaperArrows=$URLBuilderPaperArrows . "&help=yes";
 	$URLBuilderAdvSearch=$URLBuilderAdvSearch . "&help=yes";
+	$URLBuilderAdminCalDate=$URLBuilderAdminCalDate . "&help=yes";
 }
 if ($linkComplaint == 1 && $linkHelp =="yes"){
 	$URLBuilderLocalAccess=$URLBuilderLocalAccess . "&complaint=1";
 	$URLBuilderHelp=$URLBuilderHelp . "&complaint=1";
 	$URLBuilderPaperArrows=$URLBuilderPaperArrows . "&complaint=1";
 	$URLBuilderAdvSearch=$URLBuilderAdvSearch . "&complaint=1";
+	$URLBuilderAdminCalDate=$URLBuilderAdminCalDate . "&complaint=1";
 }
 ?>
 <!DOCTYPE html>
@@ -126,7 +150,19 @@ if ($linkComplaint == 1 && $linkHelp =="yes"){
 	#welcome h2 {
 		text-transform:capitalize;
 	}
-	#cal, #sendForm, .modifyUsers, #auditForm, #help {
+	#bookingCalendar {
+		width:100%;
+		padding:.5em;
+	}
+	#monthName {
+		text-align:center;
+		font-weight:normal;
+		size:1.2em;
+	}
+	.dayNames {
+		text-transform:capitalize;
+	}
+	#cal, #sendForm, .modifyUsers, #auditForm, #help, .centeredTheme {
 		margin-left:auto;
 		margin-right:auto;
 		max-width:960px;
@@ -145,10 +181,19 @@ if ($linkComplaint == 1 && $linkHelp =="yes"){
 	.calEmptyCell {
 		background-color:#f0f0f0;
 	}
+	.calColorCell1 {
+		background-color:#e9e9e9;
+	}
+	.calColorCell2 {
+		background-color:#e0e0e0;
+	}
+	.calColorCell3 {
+		background-color:#e0e0e0;
+	}
 	.calDateCell {
 		background-color:#fff;
 	}
-	.calDateCell, .calEmptyCell {
+	.calDateCell, .calEmptyCell, .calColorCell1, .calColorCell2, .calColorCell3 {
 		border:1px solid #bbb;
 	}
 	#calMessage {
@@ -161,6 +206,12 @@ if ($linkComplaint == 1 && $linkHelp =="yes"){
 	}
 	.cellBookedTime, .cellBookedName {
 		padding:2px;
+	}
+	#bookingCalendar td {
+		vertical-align:top;
+	}
+	#bookingCalendar th {
+		width:14%;
 	}
 	#sendForm {
 		display:table;
@@ -197,6 +248,10 @@ if ($linkComplaint == 1 && $linkHelp =="yes"){
 	}
 	#machineAccessTable td{
 		padding:.2em .5em;
+	}
+	#advSearch {
+		max-width:350px;
+		padding:.5em;
 	}
 	-->
 	</style>

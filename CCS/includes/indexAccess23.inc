@@ -1,3 +1,5 @@
+<div class='centeredTheme' id='advSearch'>
+<div style='text-align:center;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="margin-right:50px;" href='<?php echo $URLBuilderAdvSearch; if ( $linkAdvSearch ) {}else {echo "&advSearch=on";} ?>'>Advanced Search</a></div>
 <?php
 // If advanced search has been selected
 if( $_GET['advSearch'] == "on") {
@@ -11,3 +13,6 @@ if( $_GET['advSearch'] == "on") {
 		<input type='submit' value='Submit'>
 	</form>";
 }
+?>
+</div>
+<br><br>

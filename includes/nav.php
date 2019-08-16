@@ -1,11 +1,8 @@
-<?php
-$WhereTheHeckOurAboutPageIs = "about.php"; //Mike, this is yours to deal with
-?>
 <nav>
     <ul>
-        <li><a href="CCS/login.php">Clinical Coding System</a></li>
-        <li><a href="Testing area/index.php">Testing area</a></li>
-        <li><a href="Testing area/testForJoe.php">Test for Joe</a></li>
-        <li><a href="<?php echo $WhereTheHeckOurAboutPageIs; ?>">About Us</a></li>
+        <li><a href='CCS/login.php' target='_blank'>Clinical Coding System</a></li>
+        <li><a href='Testing area/index.php' target='_blank'>Testing area</a></li>
+        <li><a href='https://github.com/BlehCJHunter/IITTTDCCS' target='_blank'>Team GitHub</a></li>
+        <li><a href='https://blehcjhunter.github.io/IITAssignmentTwo/' target='_blank'>Our Team Profile</a></li>
     </ul>
 </nav>

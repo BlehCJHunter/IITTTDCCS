@@ -120,6 +120,10 @@ if($_SESSION['dbg']){
 			<td class="dataEntry"><textarea name="scomments"><?php echo $thissymptom["Symptom Comments"]; ?></textarea></td>
 		</tr><tr>
 			<td colspan="2" class="infoCell">
+				<input type="checkbox" value="agree"> I agree to the <a href=''>terms of service</a>
+			</td>
+		</tr><tr>
+			<td colspan="2" class="infoCell">
 				<input class="resetButton" type="reset" value="Reset">
 				<input class="saveButton" type="submit" formaction='saveDetails.php' value='Save'>
 				<input class="confirmButton" name="loc" type="submit" value="Finish">
