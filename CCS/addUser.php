@@ -4,27 +4,35 @@ require 'includes/session.inc';
 
 foreach ($_POST as $key => $value) {
     ${htmlspecialchars(stripslashes(strip_tags($key)))} = htmlspecialchars(stripslashes(strip_tags($value)));
+    echo htmlspecialchars(stripslashes(strip_tags($key))) . "= " . htmlspecialchars(stripslashes(strip_tags($value))) . "<br>";
 }
 switch ($uType) {
     case "patient":
+        if($search == "Search"){
+            $target = "Location: index.php?AUI=4&searchfor=" . $Medno;
+            header($target);
+            exit();
+        } 
         if (!$delete && ($_SESSION['access'] == 3 || $_SESSION['access'] == 4 || $_SESSION['dbg'])) {
             require 'admin/includes/dbconnect.inc';
-            $AAAAAAA = mysqli_query($conn, "SELECT MAX(`Patient ID`) FROM `Patient_Details`");
+            $AAAAAAA = mysqli_query($conn, ($add ? "SELECT MAX(`Patient ID`) FROM `Patient_Details`" : "SELECT * FROM `Patient_Details`"));
             $AAAAAA = mysqli_fetch_row($AAAAAAA);
             $query = "";
-            $query .= $add ? "INSERT INTO `Patient_Details` VALUES ('" : "UPDATE `Patient_Details` ";
-            $query .= ($AAAAAA[0] + 1) . "', '";
-            $query .= $fName . "', '";
-            $query .= $lName . "', '";
-            $query .= $unit . "', '";
-            $query .= $addr . "', '";
-            $query .= $street . "', '";
-            $query .= $city . "', '";
-            $query .= $pCode . "', '";
-            $query .= $DoB . "', '";
-            $query .= $sex . "', '";
-            $query .= $Medno . "', '";
-            $query .= $MCIRV . "')";
+            $query .= $add ? "INSERT INTO `Patient_Details` VALUES ('" : "UPDATE `Patient_Details` SET ";
+            $query .= $add ? ($AAAAAA[0] + 1) . "', " : "";
+            $query .= ($add ? "'" : "`First Name` = '") . $fName . "', ";
+            $query .= ($add ? "'" : "`Last Name` = '") . $lName . "', ";
+            $query .= ($add ? "'" : "`Unit No.` = '") . $unit . "', ";
+            $query .= ($add ? "'" : "`Street No.` = '") . $addr . "', ";
+            $query .= ($add ? "'" : "`Address` = '") . $street . "', ";
+            $query .= ($add ? "'" : "`City` = '") . $city . "', ";
+            $query .= ($add ? "'" : "`Post Code` = '") . $pCode . "', ";
+            $query .= ($add ? "'" : "`DOB` = '") . $DoB . "', ";
+            $query .= ($add ? "'" : "`Sex` = '") . $sex . "', ";
+            $query .= ($add ? "'" : "`Medicare No.` = '") . $Medno . "', ";
+            $query .= ($add ? "'" : "`Medicare IRN` = '") . $MCIRV . ($add ? "') " : "' ");
+            $query .= ($add ? "" : "WHERE ");
+            $query .= ($add ? "" : "`Patient ID` = '" . $PID . "'");
             if (mysqli_query($conn, $query)) {
                 echo "Record " . ($add ? "created" : "updated") . " successfully";
             } else {
