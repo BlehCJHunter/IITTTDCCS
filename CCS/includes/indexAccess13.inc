@@ -22,8 +22,8 @@ $lastDay=date("N", strtotime("$adminCalYear-$adminCalMonth-$totalDays"));
 $dayOfWeek=array("sun","mon","tue","wed","thu","fri","sat");
 $dayOfWeekCounter=0;
 
-echo "<table id='bookingCalendar'>\n\t<form>\n\t<tr>\n\t\t<th colspan='7' id='monthName'>";
-echo "<a href='" . $URLBuilderAdminCalDate . "&appointmentCal=" . date("Y-m-d", strtotime($adminCalDate . "-1 month")) . "'><<</a>&nbsp;&nbsp;&nbsp;" . date('F', strtotime($adminCalDate)) . "&nbsp;&nbsp;&nbsp;<a href='" . $URLBuilderAdminCalDate . "&appointmentCal=" . date("Y-m-d", strtotime($adminCalDate . "+1 month")) . "'>>></a>";
+echo "<table id='bookingCalendar'>\n\t<form>\n\t<tr>\n\t\t<th colspan='7'>";
+echo "<a href='" . $URLBuilderAdminCalDate . "&appointmentCal=" . date("Y-m-d", strtotime($adminCalDate . "-1 month")) . "'><<</a>&nbsp;&nbsp;&nbsp;<span id='monthName'>" . date('F Y', strtotime($adminCalDate)) . "</span>&nbsp;&nbsp;&nbsp;<a href='" . $URLBuilderAdminCalDate . "&appointmentCal=" . date("Y-m-d", strtotime($adminCalDate . "+1 month")) . "'>>></a>";
 echo "</th>\n\t</tr><tr>\n";
 for ( $x = 0; $x <= 6; $x++ ) {
 	echo "\t\t<th class='dayNames'>" . $dayOfWeek[$x] . "</th>\n";
