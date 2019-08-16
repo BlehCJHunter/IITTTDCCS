@@ -86,6 +86,17 @@ switch ($ref) {
             $queryone .= ($f1 ? "" : ", ") . "`Procedure Code ID` = '" . $_POST['procedure'][0] . "'";
             $f1 = 0;
         }
+        switch ($agreed) {
+            case "on":
+                $queryone .= ($f1 ? "" : ", ") . "`Procedure Validation` = 1";
+                $f1 = 0;
+                break;
+
+            default:
+                $queryone .= ($f1 ? "" : ", ") . "`Procedure Validation` = 0";
+                $f1 = 0;
+                break;
+        }
         if (isset($diagnosis)) {
             $querytwo .= ($f2 ? "" : ", ") . "`Symptom Code ID` = '" . $_POST['diagnosis'][0] . "'";
             $f2 = 0;
@@ -100,6 +111,7 @@ switch ($ref) {
         }
         $queryone .= " WHERE `Case ID` = '" . $CID . "'";
         $querytwo .= " WHERE `Case ID` = '" . $CID . "'";
+        echo $queryone . "<br>" . $querytwo;
         require 'admin/includes/dbconnect.inc';
         if (mysqli_query($conn, $queryone)) {
             echo "Record updated successfully";

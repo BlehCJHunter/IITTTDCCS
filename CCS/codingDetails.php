@@ -120,7 +120,7 @@ if($_SESSION['dbg']){
 			<td class="dataEntry"><textarea name="scomments"><?php echo $thissymptom["Symptom Comments"]; ?></textarea></td>
 		</tr><tr>
 			<td colspan="2" class="infoCell">
-				<input type="checkbox" value="agree"> I agree to the <a href=''>terms of service</a>
+				<input name="agreed" type="checkbox" <?php echo ($thisprocedure['Procedure Validation'] ? "checked" : ""); ?>> I agree to the <a href=''>terms of service</a>
 			</td>
 		</tr><tr>
 			<td colspan="2" class="infoCell">
