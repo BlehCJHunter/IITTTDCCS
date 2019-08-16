@@ -157,7 +157,7 @@ if ($linkComplaint == 1 && $linkHelp =="yes"){
 	#monthName {
 		text-align:center;
 		font-weight:normal;
-		size:1.2em;
+		font-size:2em;
 	}
 	.dayNames {
 		text-transform:capitalize;
