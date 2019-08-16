@@ -2,6 +2,18 @@
 require 'includes/session.inc';
 // godMode 0 will turn off the ability to switch users
 $godMode=$_SESSION['dbg'];
+if (isset($_GET['errorstate'])){
+    echo "Error: ";
+    switch ($_GET['errorstate']){
+        case "failupdate":
+            echo "No such user/patient when attempting to update<br>";
+            break;
+        
+        default :
+            echo "Unknown Error<br>";
+            break;
+    }
+}
 
 // Holds a variable on the level of access a user has on the page
 $accessUserGlobal = $_SESSION['access'];

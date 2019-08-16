@@ -29,15 +29,21 @@ switch ($uType) {
             $query .= ($add ? "'" : "`Post Code` = '") . $pCode . "', ";
             $query .= ($add ? "'" : "`DOB` = '") . $DoB . "', ";
             $query .= ($add ? "'" : "`Sex` = '") . $sex . "', ";
-            $query .= ($add ? "'" : "`Medicare No.` = '") . $Medno . "', ";
+            if ($PID > -1) {
+                $query .= ($add ? "'" : "`Medicare No.` = '") . $Medno . "', ";
+            }
             $query .= ($add ? "'" : "`Medicare IRN` = '") . $MCIRV . ($add ? "') " : "' ");
             $query .= ($add ? "" : "WHERE ");
-            $query .= ($add ? "" : "`Patient ID` = '" . $PID . "'");
+            $query .= ($add ? "" : ($PID > -1 ? "`Patient ID` = '" . $PID : "`Medicare No.` = '" . $Medno) . "'");
             if (mysqli_query($conn, $query)) {
                 echo "Record " . ($add ? "created" : "updated") . " successfully";
             } else {
                 echo "Error: " . $query . "<br>" . mysqli_error($conn);
                 $conn->close();
+                if (!$add) {
+                    $target = "Location: index.php?AUI=4&errorstate=failupdate";
+                    header($target);
+                }
                 exit();
             }
             $conn->close();
@@ -75,18 +81,25 @@ switch ($uType) {
             $query .= ($add ? "'" : "`Last Name` = '") . $lName . "', ";
             $query .= ($add ? "'" : "`Position Title` = '") . $title . "', ";
             $query .= ($add ? "'" : "`Access_ID` = '") . $acc . "', ";
-            $query .= ($add ? "'" : "`Username` = '") . $uName . "', ";
+            if (($UID > 0) && isset($UID)) {
+                $query .= ($add ? "'" : "`Username` = '") . $uName . "', ";
+            }
             $query .= ($add ? "'" . hash("sha512", $uName . "ZYX" . $pWord . "ABC") . "', " : (strlen($pWord) > 1 ? "`Password Token` = '" . hash("sha512", $uName . "ZYX" . $pWord . "ABC") . "', " : ""));
             $query .= ($add ? "'" . date("Y-m-d H:i:s", time()) . "', " : "");
             $query .= ($add ? "'" : "`Email` = '") . $email . "', ";
             $query .= ($add ? "'" : "`Phone Number` = '") . $phone . "'";
             $query .= ($add ? ") " : " WHERE ");
-            $query .= ($add ? "" : "`User ID` = '" . $UID . "'");
+            $query .= ($add ? "" : (($UID > 0) && isset($UID) ? "`User ID` = '" . $UID : "`Username` = '" . $uName) . "'");
             if (mysqli_query($conn, $query)) {
+                echo $query . "<br>";
                 echo "Record " . ($add ? "created" : "updated") . " successfully";
             } else {
                 echo "Error: " . $query . "<br>" . mysqli_error($conn);
                 $conn->close();
+                if (!$add) {
+                    $target = "Location: index.php?AUI=4&errorstate=failupdate";
+                    header($target);
+                }
                 exit();
             }
             $conn->close();
@@ -110,5 +123,5 @@ switch ($uType) {
     default:
         break;
 }
-header("Location: index.php");
+//header("Location: index.php");
 ?>
