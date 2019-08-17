@@ -29,7 +29,7 @@ switch ($uType) {
             $query .= ($add ? "'" : "`Post Code` = '") . $pCode . "', ";
             $query .= ($add ? "'" : "`DOB` = '") . $DoB . "', ";
             $query .= ($add ? "'" : "`Sex` = '") . $sex . "', ";
-            if ($PID > -1) {
+            if (($PID > -1) || $add) {
                 $query .= ($add ? "'" : "`Medicare No.` = '") . $Medno . "', ";
             }
             $query .= ($add ? "'" : "`Medicare IRN` = '") . $MCIRV . ($add ? "') " : "' ");
@@ -81,7 +81,7 @@ switch ($uType) {
             $query .= ($add ? "'" : "`Last Name` = '") . $lName . "', ";
             $query .= ($add ? "'" : "`Position Title` = '") . $title . "', ";
             $query .= ($add ? "'" : "`Access_ID` = '") . $acc . "', ";
-            if (($UID > 0) && isset($UID)) {
+            if ((($UID > 0) && isset($UID)) || $add) {
                 $query .= ($add ? "'" : "`Username` = '") . $uName . "', ";
             }
             $query .= ($add ? "'" . hash("sha512", $uName . "ZYX" . $pWord . "ABC") . "', " : (strlen($pWord) > 1 ? "`Password Token` = '" . hash("sha512", $uName . "ZYX" . $pWord . "ABC") . "', " : ""));
