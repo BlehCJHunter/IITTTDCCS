@@ -11,9 +11,9 @@ switch ($loc) {
         $target = 'Location: codingDetails.php?case=' . $CID;
         break;
 
-    case 'Finish':
+    /*case 'Finish':
         $target = 'Location: index.php';
-        break;
+        break;*/
 
     default:
         $target = 'Location: index.php';

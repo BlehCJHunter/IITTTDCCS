@@ -9,7 +9,7 @@ foreach ($_POST as $key => $value) {
 switch ($uType) {
     case "patient":
         if ($search == "Search") {
-            $target = "Location: index.php?AUI=4&searchfor=" . $Medno;
+            $target = "Location: index.php?AUI=" . $access . "&searchfor=" . $Medno;
             header($target);
             exit();
         }
@@ -41,7 +41,7 @@ switch ($uType) {
                 echo "Error: " . $query . "<br>" . mysqli_error($conn);
                 $conn->close();
                 if (!$add) {
-                    $target = "Location: index.php?AUI=4&errorstate=failupdate";
+                    $target = "Location: index.php?AUI=" . $access . "&errorstate=failupdate";
                     header($target);
                 }
                 exit();
@@ -66,7 +66,7 @@ switch ($uType) {
 
     case "user":
         if ($search == "Search") {
-            $target = "Location: index.php?AUI=4&usearchfor=" . $uName;
+            $target = "Location: index.php?AUI=" . $access . "&usearchfor=" . $uName;
             header($target);
             exit();
         }
@@ -97,7 +97,7 @@ switch ($uType) {
                 echo "Error: " . $query . "<br>" . mysqli_error($conn);
                 $conn->close();
                 if (!$add) {
-                    $target = "Location: index.php?AUI=4&errorstate=failupdate";
+                    $target = "Location: index.php?AUI=" . $access . "&errorstate=failupdate";
                     header($target);
                 }
                 exit();
@@ -123,5 +123,5 @@ switch ($uType) {
     default:
         break;
 }
-header("Location: index.php");
+header("Location: index.php?AUI=" . $access);
 ?>

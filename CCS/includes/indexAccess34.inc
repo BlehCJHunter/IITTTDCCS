@@ -9,6 +9,7 @@ if(isset($_GET['searchfor'])){
 ?>
 <div>
     <form action="addUser.php" method="post">
+        <input type='hidden' name='access' value='<?php echo (isset($_GET['AUI']) ? $_GET['AUI'] : $_SESSION['access']);?>'>
         <input type='hidden' name='PID' value='<?php echo $patient[0];?>'>
 	<table class='modifyUsers'>
 		<tr>
