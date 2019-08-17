@@ -76,7 +76,7 @@ switch ($ref) {
     case "https://ccs.geekrunner.net/CCS/codingDetails.php":
         $queryone = "UPDATE `Procedure_Case_User` SET ";
         $querytwo = "UPDATE `Symptom_Case_User` SET ";
-        if (isset($assessmentDate) && strlen($assessmentDate) > 0) {
+        if (isset($assessmentDate) && strtotime($assessmentDate) > 0) {
             $queryone .= ($f1 ? "" : ", ") . "`Procedure Date/Time` = '" . $assessmentDate . "'";
             $querytwo .= ($f2 ? "" : ", ") . "`Date/Time Submitted` = '" . $assessmentDate . "'";
             $f1 = 0;
