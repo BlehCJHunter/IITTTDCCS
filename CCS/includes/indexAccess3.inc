@@ -1,4 +1,6 @@
 <div id='sendForm'>
+	<div class='alert' style='text-align:center;'>Work in progress - Not working</div>
+	<h3 style='text-align:center; margin-top:0;'>Send batch of forms to government</h3>
 	<form action='index.php' method='get'>
 		Send in time period:
 		<select name='timePeriod'>

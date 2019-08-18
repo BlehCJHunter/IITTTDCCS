@@ -4,7 +4,9 @@
 	<a href='<?php echo $URLBuilderComplaint; if ( $_GET['complaint'] ) {}else {echo "&complaint=1";} ?>'>Report a problem with the website</a>
 	<?php
 	if ( $_GET['complaint'] ) {
-		echo "<br><div class='centeredSubmit'>\n\t<form>\n\t\t<textarea id='helpTextArea'>Please explain in as much detail as possible.</textarea><br>\n\t\t<input type='checkbox'>May we contact you?<br>\n\t\t<input type='submit'>\n\t</form>\n</div>";
+		echo "<br><div class='centeredSubmit'>\n\t<form>\n\t\t<textarea id='helpTextArea'>Please explain in as much detail as possible.
+
+		Work in progress - Not working</textarea><br>\n\t\t<input type='checkbox'>May we contact you?<br>\n\t\t<input type='submit'>\n\t</form>\n</div>";
 	}
 	?>
 	<script>

@@ -325,6 +325,9 @@ if ($godMode == 1) {
 		// view and send doctors forms and create entries to the calendar
 		if ( $accessUserLocal == 3 )
 			{include 'includes/indexAccess3.inc';}
+		// allows patients to update their own info
+		if ( $accessUserLocal == 1 )
+			{include 'includes/indexAccess1.inc';}
 	?>
 	</main>
 	<footer>
